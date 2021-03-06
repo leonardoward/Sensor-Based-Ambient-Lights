@@ -65,6 +65,46 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
+// get/set channel_AN0 aliases
+#define channel_AN0_TRIS                 TRISAbits.TRISA0
+#define channel_AN0_LAT                  LATAbits.LATA0
+#define channel_AN0_PORT                 PORTAbits.RA0
+#define channel_AN0_WPU                  WPUAbits.WPUA0
+#define channel_AN0_OD                   ODCONAbits.ODA0
+#define channel_AN0_ANS                  ANSELAbits.ANSA0
+#define channel_AN0_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
+#define channel_AN0_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
+#define channel_AN0_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
+#define channel_AN0_GetValue()           PORTAbits.RA0
+#define channel_AN0_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
+#define channel_AN0_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
+#define channel_AN0_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
+#define channel_AN0_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
+#define channel_AN0_SetPushPull()        do { ODCONAbits.ODA0 = 0; } while(0)
+#define channel_AN0_SetOpenDrain()       do { ODCONAbits.ODA0 = 1; } while(0)
+#define channel_AN0_SetAnalogMode()      do { ANSELAbits.ANSA0 = 1; } while(0)
+#define channel_AN0_SetDigitalMode()     do { ANSELAbits.ANSA0 = 0; } while(0)
+
+// get/set FOTORESISTENCIA aliases
+#define FOTORESISTENCIA_TRIS                 TRISAbits.TRISA2
+#define FOTORESISTENCIA_LAT                  LATAbits.LATA2
+#define FOTORESISTENCIA_PORT                 PORTAbits.RA2
+#define FOTORESISTENCIA_WPU                  WPUAbits.WPUA2
+#define FOTORESISTENCIA_OD                   ODCONAbits.ODA2
+#define FOTORESISTENCIA_ANS                  ANSELAbits.ANSA2
+#define FOTORESISTENCIA_SetHigh()            do { LATAbits.LATA2 = 1; } while(0)
+#define FOTORESISTENCIA_SetLow()             do { LATAbits.LATA2 = 0; } while(0)
+#define FOTORESISTENCIA_Toggle()             do { LATAbits.LATA2 = ~LATAbits.LATA2; } while(0)
+#define FOTORESISTENCIA_GetValue()           PORTAbits.RA2
+#define FOTORESISTENCIA_SetDigitalInput()    do { TRISAbits.TRISA2 = 1; } while(0)
+#define FOTORESISTENCIA_SetDigitalOutput()   do { TRISAbits.TRISA2 = 0; } while(0)
+#define FOTORESISTENCIA_SetPullup()          do { WPUAbits.WPUA2 = 1; } while(0)
+#define FOTORESISTENCIA_ResetPullup()        do { WPUAbits.WPUA2 = 0; } while(0)
+#define FOTORESISTENCIA_SetPushPull()        do { ODCONAbits.ODA2 = 0; } while(0)
+#define FOTORESISTENCIA_SetOpenDrain()       do { ODCONAbits.ODA2 = 1; } while(0)
+#define FOTORESISTENCIA_SetAnalogMode()      do { ANSELAbits.ANSA2 = 1; } while(0)
+#define FOTORESISTENCIA_SetDigitalMode()     do { ANSELAbits.ANSA2 = 0; } while(0)
+
 /**
    @Param
     none
