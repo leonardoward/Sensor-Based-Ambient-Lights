@@ -15,18 +15,18 @@
 *.o
 *.sdb
 *.obj.dmp
-html/
-nbproject/private/
-nbproject/Package-*.bash
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-funclist
-nbproject/Makefile-*
-disassembly/
+Hela.X/html/
+Hela.X/nbproject/private/
+Hela.X/nbproject/Package-*.bash
+Hela.X/build/
+Hela.X/nbbuild/
+Hela.X/dist/
+Hela.X/nbdist/
+Hela.X/nbactions.xml
+Hela.X/nb-configuration.xml
+Hela.X/funclist
+Hela.X/nbproject/Makefile-*
+Hela.X/disassembly/
 *.map
 
 # End of https://www.toptal.com/developers/gitignore/api/mplabx
