@@ -43,6 +43,32 @@
 
 #include "mcc_generated_files/mcc.h"
 
+adc_result_t readADC()
+{
+    uint16_t convertedValue;
+
+    ADC_StartConversion();
+
+    while(!ADC_IsConversionDone());
+    
+    convertedValue = ADC_GetConversionResult();
+}
+
+//**Function to send one byte of date to UART**//
+void UART_send_char(char bt)  
+{
+    while(!TXIF);  // hold the program till TX buffer is free
+    TXREG = bt; //Load the transmitter buffer with the received value
+}
+//_____________End of function________________//
+
+//**Function to convert string to byte**//
+void UART_send_string(char* st_pt)
+{
+    while(*st_pt) //if there is a char
+        UART_send_char(*st_pt++); //process it as a byte data
+}
+//___________End of function______________//
 /*
                          Main application
  */
@@ -65,10 +91,17 @@ void main(void)
 
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
+    
+    ADC_Initialize();
 
     while (1)
     {
         // Add your application code
+        uint16_t convertedValue = readADC();
+        char* str = (char*) convertedValue;
+        
+        UART_send_string(str);
+        __delay_ms(1000);
     }
 }
 /**

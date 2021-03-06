@@ -65,14 +65,14 @@ void PIN_MANAGER_Initialize(void)
     TRISx registers
     */
     TRISA = 0x37;
-    TRISB = 0xF0;
+    TRISB = 0x70;
     TRISC = 0xFE;
 
     /**
     ANSELx registers
     */
     ANSELC = 0xCF;
-    ANSELB = 0xF0;
+    ANSELB = 0xD0;
     ANSELA = 0x17;
 
     /**
@@ -110,6 +110,11 @@ void PIN_MANAGER_Initialize(void)
 
    
     
+	
+		
+    RXPPS = 0x0D;   //RB5->EUSART:RX;    
+		
+    RB7PPS = 0x16;   //RB7->EUSART:TX;    
 }
   
 void PIN_MANAGER_IOC(void)

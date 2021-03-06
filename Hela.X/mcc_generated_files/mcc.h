@@ -54,6 +54,7 @@
 #include <conio.h>
 #include "memory.h"
 #include "adc.h"
+#include "eusart.h"
 
 
 
