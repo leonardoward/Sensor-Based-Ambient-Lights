@@ -105,6 +105,26 @@
 #define FOTORESISTENCIA_SetAnalogMode()      do { ANSELAbits.ANSA2 = 1; } while(0)
 #define FOTORESISTENCIA_SetDigitalMode()     do { ANSELAbits.ANSA2 = 0; } while(0)
 
+// get/set IO_RC0 aliases
+#define IO_RC0_TRIS                 TRISCbits.TRISC0
+#define IO_RC0_LAT                  LATCbits.LATC0
+#define IO_RC0_PORT                 PORTCbits.RC0
+#define IO_RC0_WPU                  WPUCbits.WPUC0
+#define IO_RC0_OD                   ODCONCbits.ODC0
+#define IO_RC0_ANS                  ANSELCbits.ANSC0
+#define IO_RC0_SetHigh()            do { LATCbits.LATC0 = 1; } while(0)
+#define IO_RC0_SetLow()             do { LATCbits.LATC0 = 0; } while(0)
+#define IO_RC0_Toggle()             do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0)
+#define IO_RC0_GetValue()           PORTCbits.RC0
+#define IO_RC0_SetDigitalInput()    do { TRISCbits.TRISC0 = 1; } while(0)
+#define IO_RC0_SetDigitalOutput()   do { TRISCbits.TRISC0 = 0; } while(0)
+#define IO_RC0_SetPullup()          do { WPUCbits.WPUC0 = 1; } while(0)
+#define IO_RC0_ResetPullup()        do { WPUCbits.WPUC0 = 0; } while(0)
+#define IO_RC0_SetPushPull()        do { ODCONCbits.ODC0 = 0; } while(0)
+#define IO_RC0_SetOpenDrain()       do { ODCONCbits.ODC0 = 1; } while(0)
+#define IO_RC0_SetAnalogMode()      do { ANSELCbits.ANSC0 = 1; } while(0)
+#define IO_RC0_SetDigitalMode()     do { ANSELCbits.ANSC0 = 0; } while(0)
+
 /**
    @Param
     none
