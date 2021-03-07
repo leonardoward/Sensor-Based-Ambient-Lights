@@ -77,7 +77,19 @@ void I2C_Write(uint8_t i2c_data)
   SSPBUF = i2c_data;  // update buffer
 }
  
-
+uint8_t I2C_Read(uint8_t ack)
+{
+  uint8_t _data;
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  RCEN = 1;
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  _data = SSPBUF;  // read data from buffer
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  // send acknowledge pulse ? (depends on ack, if 1 send, otherwise don't send)
+  ACKDT = !ack;
+  ACKEN = 1;
+  return _data;  // return data read
+}
 
  
 /********************** end I2C functions **********************/
