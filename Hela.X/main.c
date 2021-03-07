@@ -99,6 +99,12 @@ uint8_t bcd_to_decimal(uint8_t number) {
   return((number >> 4) * 10 + (number & 0x0F));
 }
 
+// convert decimal to BCD function
+uint8_t decimal_to_bcd(uint8_t number) {
+  return(((number / 10) << 4) + (number % 10));
+}
+
+
 
 /********************** END RTC chip functions *********************/
 
