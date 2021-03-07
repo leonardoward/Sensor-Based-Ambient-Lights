@@ -65,6 +65,13 @@ void I2C_Repeated_Start()
   RSEN = 1;  // initiate repeated start condition
 }
  
+void I2C_Stop()
+{
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  PEN = 1;  // initiate stop condition
+}
+ 
+
 
  
 /********************** end I2C functions **********************/
