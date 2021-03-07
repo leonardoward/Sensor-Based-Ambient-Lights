@@ -91,8 +91,16 @@ uint8_t I2C_Read(uint8_t ack)
   return _data;  // return data read
 }
 
- 
 /********************** end I2C functions **********************/
+
+/********************** RTC chip functions *********************/
+// convert BCD to decimal function
+uint8_t bcd_to_decimal(uint8_t number) {
+  return((number >> 4) * 10 + (number & 0x0F));
+}
+
+
+/********************** END RTC chip functions *********************/
 
 //**Function to send one byte of date to UART**//
 void UART_send_char(char bt)  
