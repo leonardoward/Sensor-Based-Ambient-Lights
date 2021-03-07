@@ -53,6 +53,12 @@ void I2C_Init(uint32_t i2c_clk_freq)
   SSPSTAT = 0;
 }
  
+void I2C_Start()
+{
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  SEN = 1;  // initiate start condition
+}
+ 
 
  
 /********************** end I2C functions **********************/
