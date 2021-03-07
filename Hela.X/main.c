@@ -141,6 +141,53 @@ void RTC_time_date_conversion()
  
 }
 
+// Edit time and date function
+uint8_t rtc_edit(uint8_t x, uint8_t y, uint8_t parameter)
+{
+//  while(debounce());  // call debounce function (wait for B1 to be released)
+// 
+//  while(1) {
+// 
+//    while(!button2)    // if button B2 is pressed
+//    {
+//      parameter++;
+//      if(i == 0 && parameter > 23)   // if hours > 23 ==> hours = 0
+//        parameter = 0;
+//      if(i == 1 && parameter > 59)   // if minutes > 59 ==> minutes = 0
+//        parameter = 0;
+//      if(i == 2 && parameter > 31)   // if date > 31 ==> date = 1
+//        parameter = 1;
+//      if(i == 3 && parameter > 12)   // if month > 12 ==> month = 1
+//        parameter = 1;
+//      if(i == 4 && parameter > 99)   // if year > 99 ==> year = 0
+//        parameter = 0;
+// 
+//      LCD_Goto(x, y);
+//      LCD_PutC(parameter / 10 + '0');
+//      LCD_PutC(parameter % 10 + '0');
+//      __delay_ms(200);
+// 
+//    }
+// 
+//    LCD_Goto(x, y);
+//    LCD_Print("  ");  // print 2 spaces
+//    blink();
+// 
+//    LCD_Goto(x, y);
+//    LCD_PutC(parameter / 10 + '0');
+//    LCD_PutC(parameter % 10 + '0');
+//    blink();
+// 
+//    if(!button1)     // if button B1 is pressed
+//    if(debounce())   // call debounce function (make sure if B1 is pressed)
+//    {
+//      i++;   // increment 'i' for the next parameter
+//      return parameter;     // return parameter value and exit
+//    }
+// 
+//  }
+ 
+}
 
 /********************** END RTC chip functions *********************/
 
