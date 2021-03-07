@@ -67,8 +67,14 @@ void I2C_Repeated_Start()
  
 void I2C_Stop()
 {
-  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  
   PEN = 1;  // initiate stop condition
+}
+ 
+void I2C_Write(uint8_t i2c_data)
+{
+  while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));  // wait for MSSP module to be free (not busy)
+  SSPBUF = i2c_data;  // update buffer
 }
  
 
