@@ -119,7 +119,7 @@ void main(void)
                ADC
          * 
          *  Voltage values range are: 0V - 2.06V
-         *  It is an 8 bits ADC, goes from 0 to 1024 bits
+         *  It is an 10 bits ADC, goes from 0 to 1024 bits
          *  As the main voltage source is 5V, the bit relationship would be
          *  0     -> 0 bits
          *  2.06V -> 421 bits
