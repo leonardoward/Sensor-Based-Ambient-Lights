@@ -42,6 +42,7 @@
 */
 
 #include "mcc_generated_files/mcc.h"
+#include <stdio.h>
 
 adc_result_t readADC()
 {
@@ -68,6 +69,19 @@ void UART_send_string(char* st_pt)
     while(*st_pt) //if there is a char
         UART_send_char(*st_pt++); //process it as a byte data
 }
+
+//**Function to print an integer number into serial monitor**//
+void printInt(int number, char * description)
+{
+    char str[10];
+    sprintf(str, "%d", number);
+    UART_send_string(description);
+    UART_send_string(str);
+    UART_send_string("\r\n");
+}
+
+
+
 //___________End of function______________//
 /*
                          Main application
@@ -100,22 +114,11 @@ void main(void)
 
     while (1)
     {
-        // Add your application code
-//        uint16_t convertedValue = readADC();
-        
+        // Read ADC value from sensor
         convertedValue = ADC_GetConversion(0x2);
-        if(convertedValue > 0 && convertedValue < 200)
-        {
-            char* str = "Es mayor a cero y menor a 500 \r\n";
-            UART_send_string(str);
-            __delay_ms(1000);
-        }
-        else if(convertedValue > 200 && convertedValue < 424)
-        {
-            char* str = "Es mayor a 500 y menor a 1024 \r\n";
-            UART_send_string(str);
-            __delay_ms(1000);
-        }
+        
+        
+  
         
         
         
