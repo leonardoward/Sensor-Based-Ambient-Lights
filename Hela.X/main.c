@@ -133,6 +133,7 @@ void main(void)
     LCDGoto(0,1);           // go to column 3, row 2
     LCDPutStr("LCD Example");
     Delay_Seconds(1);
+    
     while (1)
     {
         /*
