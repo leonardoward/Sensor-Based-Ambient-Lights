@@ -1,176 +1,168 @@
-/*******************************************************************************
- * LCD_Lib.c                                                                   *
- * MPLAB XC8 compiler LCD driver for LCDs with HD44780 compliant controllers.  *
- * https://simple-circuit.com/                                                 *
- *                                                                             *
- ******************************************************************************/
+/**
+   LCD driver source file
 
+  Company:
+    Microchip Technology Inc.
 
-#pragma warning disable 520
+  File Name:
+    lcd.c
 
-#include "mcc_generated_files/pin_manager.h"
-#include "LCD_Lib.h"
-#include <stdint.h>
+  Summary:
+    This is the  user  source file which has specific functions for LCD.
 
-//#define LCD_FIRST_ROW          0x80
-//#define LCD_SECOND_ROW         0xC0
-//#define LCD_THIRD_ROW          0x94
-//#define LCD_FOURTH_ROW         0xD4
-//#define LCD_CLEAR              0x01
-//#define LCD_RETURN_HOME        0x02
-//#define LCD_ENTRY_MODE_SET     0x04
-//#define LCD_CURSOR_OFF         0x0C
-//#define LCD_UNDERLINE_ON       0x0E
-//#define LCD_BLINK_CURSOR_ON    0x0F
-//#define LCD_MOVE_CURSOR_LEFT   0x10
-//#define LCD_MOVE_CURSOR_RIGHT  0x14
-//#define LCD_TURN_ON            0x0C
-//#define LCD_TURN_OFF           0x08
-//#define LCD_SHIFT_LEFT         0x18
-//#define LCD_SHIFT_RIGHT        0x1E
+  Description:
+    This modules includes all service functions for LCD operations.
+*/
 
+/*
+Copyright (c) 2013 - 2014 released Microchip Technology Inc.  All rights reserved.
 
-#ifndef LCD_TYPE
-   #define LCD_TYPE 2           // 0=5x7, 1=5x10, 2=2 lines
-#endif
+Microchip licenses to you the right to use, modify, copy and distribute
+Software only when embedded on a Microchip microcontroller or digital signal
+controller that is integrated into your product or third party product
+(pursuant to the sublicense terms in the accompanying license agreement).
 
-__bit RS;
+You should refer to the license agreement accompanying this Software for
+additional information regarding your rights and obligations.
 
-//void LCD_Write_Nibble(uint8_t n);
-//void LCD_Cmd(uint8_t Command);
-//void LCD_Goto(uint8_t col, uint8_t row);
-//void LCD_PutC(char LCD_Char);
-//void LCD_Print(char* LCD_Str);
-//void LCD_Begin();
+SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
+MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
+IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
+CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
+OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
+INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
+CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
+SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
+(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+*/
 
-void LCD_Write_Nibble(uint8_t n)
+/**
+  Section: Included Files
+*/
+#include <xc.h>
+#include "LCD_lib.h"
+
+void LCD_Initialize()
 {
-  //LCD_RS = RS;
-  if (RS)
-      RS_PIN_SetHigh();
-  else
-      RS_PIN_SetLow();
+    // clear latches before enabling TRIS bits
+    LCD_PORT = 0;
+
+    TRISC = 0x00;
+
+    // power up the LCD
+    LCD_PWR = 1;
+
+    // required by display controller to allow power to stabilize
+    __delay_ms(LCD_Startup);
+
+    // required by display initialization
+    LCDPutCmd(0x32);
+
+    // set interface size, # of lines and font
+    LCDPutCmd(FUNCTION_SET);
+
+    // turn on display and sets up cursor
+    LCDPutCmd(DISPLAY_SETUP);
+    
+    DisplayClr();
+
+    // set cursor movement direction
+    LCDPutCmd(ENTRY_MODE);
+
+}
+
+
+void LCDWriteNibble(uint8_t ch,uint8_t rs)
+{
+    // always send the upper nibble
+    ch = (ch >> 4);
+
+    // mask off the nibble to be transmitted
+    ch = (ch & 0x0F);
+
+    // clear the lower half of LCD_PORT
+    LCD_PORT = (LCD_PORT & 0xF0);
+
+    // move the nibble onto LCD_PORT
+    LCD_PORT = (LCD_PORT | ch);
+
+    // set data/instr bit to 0 = insructions; 1 = data
+    LCD_RS = rs;
+
+    // RW - set write mode
+    LCD_RW = 0;
+
+    // set up enable before writing nibble
+    LCD_EN = 1;
+
+    // turn off enable after write of nibble
+    LCD_EN = 0;
+}
+
+void LCDPutChar(uint8_t ch)
+{
+    __delay_ms(LCD_delay);
+
+    //Send higher nibble first
+    LCDWriteNibble(ch,data);
+
+    //get the lower nibble
+    ch = (ch << 4);
+
+    // Now send the low nibble
+    LCDWriteNibble(ch,data);
+}
+
+    
+void LCDPutCmd(uint8_t ch)
+{
+    __delay_ms(LCD_delay);
+
+    //Send the higher nibble
+    LCDWriteNibble(ch,instr);
+
+    //get the lower nibble
+    ch = (ch << 4);
+
+    __delay_ms(1);
+
+    //Now send the lower nibble
+    LCDWriteNibble(ch,instr);
+}
+
  
-  //LCD_D4 = n & 0x01;
-  if (n & 0x01)
-      D4_PIN_SetHigh();
-  else
-      D4_PIN_SetLow();
-  
-  //LCD_D5 = (n >> 1) & 0x01;
-  if ((n >> 2) & 0x01)
-      D5_PIN_SetHigh();
-  else
-      D5_PIN_SetLow();
-  
-  //LCD_D6 = (n >> 2) & 0x01;
-  if ((n >> 3) & 0x01)
-      D6_PIN_SetHigh();
-  else
-      D6_PIN_SetLow();
-  
-  //LCD_D7 = (n >> 3) & 0x01;
-  if ((n >> 3) & 0x01)
-      D7_PIN_SetHigh();
-  else
-      D7_PIN_SetLow();
-
-  // send enable pulse
-  //LCD_EN = 0;
-  E_PIN_SetLow();
-  __delay_us(1);
-  //LCD_EN = 1;
-  E_PIN_SetHigh();
-  __delay_us(1);
-  //LCD_EN = 0;
-  E_PIN_SetLow();
-  __delay_us(100);
-}
-
-void LCD_Cmd(uint8_t Command)
+void LCDPutStr(const char *str)
 {
-  RS = 0;
-  LCD_Write_Nibble(Command >> 4);
-  LCD_Write_Nibble(Command);
-  if((Command == LCD_CLEAR) || (Command == LCD_RETURN_HOME))
-    __delay_ms(2);
+    uint8_t i=0;
+    
+    // While string has not been fully traveresed
+    while (str[i])
+    {
+        // Go display current char
+        LCDPutChar(str[i++]);
+    }
+    
 }
 
-void LCD_Goto(uint8_t col, uint8_t row)
+void LCDGoto(uint8_t pos,uint8_t ln)
 {
-  switch(row)
-  {
-    case 2:
-      LCD_Cmd(LCD_SECOND_ROW + col - 1);
-      break;
-    case 3:
-      LCD_Cmd(LCD_THIRD_ROW  + col - 1);
-      break;
-    case 4:
-      LCD_Cmd(LCD_FOURTH_ROW + col - 1);
-    break;
-    default:      // case 1:
-      LCD_Cmd(LCD_FIRST_ROW  + col - 1);
-  }
+    // if incorrect line or column
+    if ((ln > (NB_LINES-1)) || (pos > (NB_COL-1)))
+    {
+        // Just do nothing
+        return;
+    }
 
+    // LCD_Goto command
+    LCDPutCmd((ln == 1) ? (0xC0 | pos) : (0x80 | pos));
+
+    // Wait for the LCD to finish
+    __delay_ms(LCD_delay);
 }
+/**
+ End of File
+*/
 
-void LCD_PutC(char LCD_Char)
-{
-  RS = 1;
-  LCD_Write_Nibble(LCD_Char >> 4);
-  LCD_Write_Nibble(LCD_Char );
-}
 
-void LCD_Print(char* LCD_Str)
-{
-  uint8_t i = 0;
-  RS = 1;
-  while(LCD_Str[i] != '\0')
-  {
-    LCD_Write_Nibble(LCD_Str[i] >> 4);
-    LCD_Write_Nibble(LCD_Str[i++] );
-  }
-}
 
-void LCD_Begin()
-{
-  RS = 0;
-  
-  RS_PIN_SetLow();
-  E_PIN_SetLow();
-  D4_PIN_SetLow();
-  D5_PIN_SetLow();
-  D6_PIN_SetLow();
-  D7_PIN_SetLow();
-//  LCD_RS     = 0;
-//  LCD_EN     = 0;
-//  LCD_D4     = 0;
-//  LCD_D5     = 0;
-//  LCD_D6     = 0;
-//  LCD_D7     = 0;
-//  LCD_RS_DIR = 0;
-//  LCD_EN_DIR = 0;
-//  LCD_D4_DIR = 0;
-//  LCD_D5_DIR = 0;
-//  LCD_D6_DIR = 0;
-//  LCD_D7_DIR = 0;
-
-  __delay_ms(40);
-  LCD_Cmd(3);
-  __delay_ms(5);
-  LCD_Cmd(3);
-  __delay_ms(5);
-  LCD_Cmd(3);
-  __delay_ms(5);
-  LCD_Cmd(LCD_RETURN_HOME);
-  __delay_ms(5);
-  LCD_Cmd(0x20 | (LCD_TYPE << 2));
-  __delay_ms(50);
-  LCD_Cmd(LCD_TURN_ON);
-  __delay_ms(50);
-  LCD_Cmd(LCD_CLEAR);
-  __delay_ms(50);
-  LCD_Cmd(LCD_ENTRY_MODE_SET | LCD_RETURN_HOME);
-  __delay_ms(50);
-}

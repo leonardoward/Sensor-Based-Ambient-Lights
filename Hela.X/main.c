@@ -78,6 +78,18 @@ void printInt(int number, char * description)
 /*
                          Main application
  */
+
+
+void Delay_Seconds(unsigned char z)
+{
+    unsigned char x,y;
+    for (y=0; y<z; y++)
+    {
+        for(x=0; x<100; x++)__delay_ms(10);
+    }
+}
+
+
 void main(void)
 {
     // initialize the device
@@ -102,19 +114,25 @@ void main(void)
     
     //uint16_t convertedValue;
     
-    LCD_Begin();       // initialize LCD module
+    LCD_Initialize();       // initialize LCD module
  
-    LCD_Goto(4, 1);           // go to column 4, row 1
-    LCD_Print("MPLAB XC8");
-    LCD_Goto(3, 2);           // go to column 3, row 2
-    LCD_Print("LCD Example");
- 
-    __delay_ms(5000);         // wait 5 seconds
- 
-    LCD_Cmd(LCD_CLEAR);       // clear the whole screen
-    LCD_Goto(3, 1);           // go to column 3, row 1
-    LCD_Print("Hello world!");
-
+    
+    LCDPutStr(" Hello World!");
+    LCDGoto(8, 1);           // go to column 4, row 1
+    LCDPutChar("1");
+    Delay_Seconds(1);
+    LCDGoto(8, 1);           // go to column 4, row 1
+    LCDPutChar("2");
+    Delay_Seconds(1);
+    LCDGoto(8, 1);           // go to column 4, row 1
+    LCDPutChar("3");
+    Delay_Seconds(1);
+    DisplayClr();
+    
+    LCDPutStr("LCD Display");
+    LCDGoto(0,1);           // go to column 3, row 2
+    LCDPutStr("LCD Example");
+    Delay_Seconds(1);
     while (1)
     {
         /*
