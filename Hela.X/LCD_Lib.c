@@ -41,7 +41,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Section: Included Files
 */
 #include <xc.h>
-#include "LCD_lib.h"
+#include "LCD_Lib.h"
 
 void LCD_Initialize()
 {
@@ -51,7 +51,7 @@ void LCD_Initialize()
     TRISC = 0x00;
 
     // power up the LCD
-    LCD_PWR = 1;
+    //LCD_PWR = 1;
 
     // required by display controller to allow power to stabilize
     __delay_ms(LCD_Startup);
@@ -91,7 +91,7 @@ void LCDWriteNibble(uint8_t ch,uint8_t rs)
     LCD_RS = rs;
 
     // RW - set write mode
-    LCD_RW = 0;
+    //LCD_RW = 0;
 
     // set up enable before writing nibble
     LCD_EN = 1;

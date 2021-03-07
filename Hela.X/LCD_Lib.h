@@ -91,9 +91,9 @@ extern "C" {
 
 // These #defines create the pin connections to the LCD in case they are changed on a future demo board
 #define LCD_PORT     LATC
-#define LCD_PWR      LATCbits.LATC7                      // LCD power pin
+//#define LCD_PWR      LATCbits.LATC7                      // LCD power pin
 #define LCD_EN       LATCbits.LATC4                      // LCD enable
-#define LCD_RW       LATCbits.LATC6                      // LCD read/write line
+//#define LCD_RW       LATCbits.LATC6                      // LCD read/write line
 #define LCD_RS       LATCbits.LATC5                      // LCD register select line
 
 #define NB_LINES    2                                   // Number of display lines

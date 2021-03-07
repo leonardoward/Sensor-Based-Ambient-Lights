@@ -45,6 +45,19 @@
 #include <stdio.h>
 #include "LCD_Lib.h"          // include LCD driver source file
 
+unsigned char operationMode = 3;        // Variable to select the operation mode
+unsigned char optionSelect = 0;         // Select an option inside an operation mode
+unsigned char lastOM = 0;               // Last operation mode selected
+unsigned char lastOS = 0;               // Last option selected
+unsigned char second= 0;
+
+char actualTime[10] = " ";                          // Actual time, given by RTC
+char timeLeft[6] = "31:26";                         // Time for the leds to be on
+char configuringTime[10] = "00:00:00" ;             // Time to configure RTC
+char configuringRange[14] = "00:00 - 00:00";        // Time range for the leds to be on
+char enviromentChoice = 0;                          // Determines if leds go on if low enviroment light
+char lightValue = 100;
+char lightValueText[5] = " ";
 
 //**Function to send one byte of date to UART**//
 void UART_send_char(char bt)  
@@ -89,6 +102,127 @@ void Delay_Seconds(unsigned char z)
     }
 }
 
+void LCD_Main()
+{    
+    if (lastOM != operationMode || lastOS != optionSelect)
+        DisplayClr();
+    
+    switch (operationMode)
+    {
+        case 0:     // Steady state and selection menu
+            
+            switch (optionSelect)
+            {
+                case 0:     // Shows the actual time and time left for the leds to be on, if configured
+                    
+                    LCDGoto(0, 0);
+                    LCDPutStr(actualTime);
+            
+                    LCDGoto(11, 1);
+                    LCDPutStr(timeLeft);
+                    
+                    break;
+                
+                case 1:     // Configure the RTC time menu option
+                    
+                    LCDGoto(1, 0);
+                    LCDPutStr("CONFIGURE TIME");
+                    break;
+                 
+                case 2:     // Configure the time range for the leds to be on menu option
+                    
+                    LCDGoto(2, 0);
+                    LCDPutStr("AUTO ON/OFF");
+                    break;
+                
+                case 3:     // Calibrate the light sensor menu option
+                    
+                    LCDGoto(2, 0);
+                    LCDPutStr("NIGHT LIGHT");
+                    break;
+            }
+            
+            break;
+         
+        case 1:     // Configure RTC time option
+            
+            LCDGoto(1, 0);
+            LCDPutStr("CONFIGURE TIME");
+            
+            switch (optionSelect)
+            {
+                case 0:     // Select hour             
+                    
+                    LCDGoto(4, 1);
+                    LCDPutStr(configuringTime);
+                    break;
+                
+                case 1:     // Select minute
+                    
+                    LCDGoto(4, 1);
+                    LCDPutStr(configuringTime);
+                    break;
+                
+                case 2:     // Select second            
+                    
+                    LCDGoto(4, 1);
+                    LCDPutStr(configuringTime);
+                    break;
+                
+            }
+            break;
+            
+        case 2:     // Configure the time range for the leds to be on option  
+            
+            LCDGoto(2, 0);
+            LCDPutStr("AUTO ON/OFF");
+            
+            switch (optionSelect)
+            {
+                case 0:     // Select start hour             
+                    
+                    LCDGoto(1, 1);
+                    LCDPutStr(configuringRange);
+                    break;
+                
+                case 1:     // Select start minute
+                    
+                    LCDGoto(1, 1);
+                    LCDPutStr(configuringRange);
+                    break;
+                
+                case 2:     // Select end hour           
+                    
+                    LCDGoto(1, 1);
+                    LCDPutStr(configuringRange);
+                    break;
+                 
+                case 3:     // Select end minute        
+                    
+                    LCDGoto(1, 1);
+                    LCDPutStr(configuringRange);
+                    break;
+                
+            }
+            break;
+        
+        case 3:         // Calibrate the light sensor option
+            
+            LCDGoto(0, 0);
+            LCDPutStr("NIGHT LIGHT: ");
+            
+            if (enviromentChoice)
+                LCDPutStr("YES");
+            else
+                LCDPutStr("NO");
+            
+            sprintf(lightValueText, "%d%%", lightValue);
+            LCDGoto(6, 1);
+            LCDPutStr(lightValueText);
+            break;
+    }
+}
+
 
 void main(void)
 {
@@ -117,22 +251,11 @@ void main(void)
     LCD_Initialize();       // initialize LCD module
  
     
-    LCDPutStr(" Hello World!");
-    LCDGoto(8, 1);           // go to column 4, row 1
-    LCDPutChar("1");
-    Delay_Seconds(1);
-    LCDGoto(8, 1);           // go to column 4, row 1
-    LCDPutChar("2");
-    Delay_Seconds(1);
-    LCDGoto(8, 1);           // go to column 4, row 1
-    LCDPutChar("3");
-    Delay_Seconds(1);
+    LCDPutStr("      HELA");
+    LCDGoto(2, 1);           // go to column 4, row 1
+    LCDPutStr("INITIALIZING");
+    Delay_Seconds(3);
     DisplayClr();
-    
-    LCDPutStr("LCD Display");
-    LCDGoto(0,1);           // go to column 3, row 2
-    LCDPutStr("LCD Example");
-    Delay_Seconds(1);
     
     while (1)
     {
@@ -149,8 +272,25 @@ void main(void)
         // Read ADC value from sensor
         //convertedValue = ADC_GetConversion(0x2);
         
+        if (second < 10)
+            sprintf(actualTime, "12:51:%d", 0);
         
+        sprintf(actualTime, "%s%d", actualTime, second);
         
+        LCD_Main();
+        
+        lastOM = operationMode;
+        lastOS = optionSelect;
+        
+        second++;
+        if (second > 59)
+            second = 0;
+        
+        optionSelect++;
+        if (optionSelect > 3)
+            optionSelect = 0;
+        
+        Delay_Seconds(1);
   
         
         
