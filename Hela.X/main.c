@@ -76,6 +76,7 @@ void printInt(int number, char * description)
     char str[10];
     sprintf(str, "%d", number);
     UART_send_string(description);
+    UART_send_string(": ");
     UART_send_string(str);
     UART_send_string("\r\n");
 }
