@@ -94,7 +94,6 @@ typedef struct
 
 typedef enum
 {
-    channel_AN0 =  0x0,
     FOTORESISTENCIA =  0x2,
     channel_DAC4_Output =  0x1A,
     channel_DAC3_Output =  0x1B,

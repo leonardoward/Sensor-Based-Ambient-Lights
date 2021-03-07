@@ -93,15 +93,34 @@ void main(void)
     //INTERRUPT_PeripheralInterruptDisable();
     
     ADC_Initialize();
+    
+    uint16_t convertedValue;
+
+    ADC_Initialize();
 
     while (1)
     {
         // Add your application code
-        uint16_t convertedValue = readADC();
-        char* str = (char*) convertedValue;
+//        uint16_t convertedValue = readADC();
         
-        UART_send_string(str);
-        __delay_ms(1000);
+        convertedValue = ADC_GetConversion(0x2);
+        if(convertedValue > 0 && convertedValue < 200)
+        {
+            char* str = "Es mayor a cero y menor a 500 \r\n";
+            UART_send_string(str);
+            __delay_ms(1000);
+        }
+        else if(convertedValue > 200 && convertedValue < 424)
+        {
+            char* str = "Es mayor a 500 y menor a 1024 \r\n";
+            UART_send_string(str);
+            __delay_ms(1000);
+        }
+        
+        printf("Hello World! \n");
+        printf("Hello World! %d\n",convertedValue);
+        
+        
     }
 }
 /**
