@@ -44,16 +44,18 @@
 #include "mcc_generated_files/mcc.h"
 #include <stdio.h>
 
-adc_result_t readADC()
+/********************** I2C functions **************************/
+ 
+void I2C_Init(uint32_t i2c_clk_freq)
 {
-    uint16_t convertedValue;
-
-    ADC_StartConversion();
-
-    while(!ADC_IsConversionDone());
-    
-    convertedValue = ADC_GetConversionResult();
+  SSPCON  = 0x28;  // configure MSSP module to work in I2C mode
+  SSPADD  = (_XTAL_FREQ/(4 * i2c_clk_freq)) - 1;  // set I2C clock frequency
+  SSPSTAT = 0;
 }
+ 
+
+ 
+/********************** end I2C functions **********************/
 
 //**Function to send one byte of date to UART**//
 void UART_send_char(char bt)  
