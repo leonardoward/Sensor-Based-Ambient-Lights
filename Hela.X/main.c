@@ -43,17 +43,8 @@
 
 #include "mcc_generated_files/mcc.h"
 #include <stdio.h>
+#include "LCD_Lib.h"          // include LCD driver source file
 
-adc_result_t readADC()
-{
-    uint16_t convertedValue;
-
-    ADC_StartConversion();
-
-    while(!ADC_IsConversionDone());
-    
-    convertedValue = ADC_GetConversionResult();
-}
 
 //**Function to send one byte of date to UART**//
 void UART_send_char(char bt)  
@@ -107,11 +98,22 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
     
-    ADC_Initialize();
+    //ADC_Initialize();
     
-    uint16_t convertedValue;
-
-    ADC_Initialize();
+    //uint16_t convertedValue;
+    
+    LCD_Begin();       // initialize LCD module
+ 
+    LCD_Goto(4, 1);           // go to column 4, row 1
+    LCD_Print("MPLAB XC8");
+    LCD_Goto(3, 2);           // go to column 3, row 2
+    LCD_Print("LCD Example");
+ 
+    __delay_ms(5000);         // wait 5 seconds
+ 
+    LCD_Cmd(LCD_CLEAR);       // clear the whole screen
+    LCD_Goto(3, 1);           // go to column 3, row 1
+    LCD_Print("Hello world!");
 
     while (1)
     {
@@ -126,7 +128,7 @@ void main(void)
          *  
         */
         // Read ADC value from sensor
-        convertedValue = ADC_GetConversion(0x2);
+        //convertedValue = ADC_GetConversion(0x2);
         
         
         
