@@ -19,8 +19,8 @@ void InitI2C(void){
 void I2C_Start(void)
 {
 	SEN = 1;			// Send start bit
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
 }
 
 
@@ -28,8 +28,8 @@ void I2C_Start(void)
 void I2C_ReStart(void)
 {
 	RSEN = 1;			// Send Restart bit
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
 }
 
 
@@ -37,8 +37,8 @@ void I2C_ReStart(void)
 void I2C_Stop(void)
 {
 	PEN = 1;			// Send stop bit
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
 }
 
 
@@ -48,8 +48,8 @@ void I2C_Send_ACK(void)
 {
 	ACKDT = 0;			// 0 means ACK
 	ACKEN = 1;			// Send ACKDT value
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
 }
 
 
@@ -58,17 +58,17 @@ void I2C_Send_NACK(void)
 {
 	ACKDT = 1;			// 1 means NACK
 	ACKEN = 1;			// Send ACKDT value
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
 }
 
 
 // Function Purpose: I2C_Write_Byte transfers one byte
-bit I2C_Write_Byte(unsigned char Byte)
+char I2C_Write_Byte(unsigned char Byte)
 {
 	SSPBUF = Byte;		// Send Byte value
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
 
 	return ACKSTAT;		// Return ACK/NACK from slave
 }
@@ -78,8 +78,8 @@ bit I2C_Write_Byte(unsigned char Byte)
 unsigned char I2C_Read_Byte(void)
 {
 	RCEN = 1;			// Enable reception of 8 bits
-	while(!SSPIF);		// Wait for it to complete
-	SSPIF = 0;			// Clear the flag bit
+	while(!SSP1IF);		// Wait for it to complete
+	SSP1IF = 0;			// Clear the flag bit
  
     return SSPBUF;		// Return received byte
 }
