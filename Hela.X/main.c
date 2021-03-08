@@ -45,15 +45,28 @@
 #include <stdio.h>
 #include "LCD_Lib.h"          // include LCD driver source file
 
-unsigned char operationMode = 3;        // Variable to select the operation mode
+unsigned char operationMode = 0;        // Variable to select the operation mode
 unsigned char optionSelect = 0;         // Select an option inside an operation mode
 unsigned char lastOM = 0;               // Last operation mode selected
 unsigned char lastOS = 0;               // Last option selected
-unsigned char second= 0;
+unsigned char currentHour = 0;          // Current time
+unsigned char currentMinute = 0;
+unsigned char currentSecond = 0;
+unsigned char aux1 = 0;                 // Aux variables
+unsigned char aux2 = 0;
+unsigned char aux3 = 0;
+unsigned char aux4 = 0;
 
-char actualTime[10] = " ";                          // Actual time, given by RTC
+unsigned char select = 0;               // Select button
+unsigned char lastSelect = 0;           // Last select button state
+unsigned char accept = 0;               // Accept button
+unsigned char lastAccept = 0;           // Last accept button state
+unsigned char cancel = 0;               // Cancel button
+unsigned char lastCancel = 0;           // Last cancel button state
+
+char actualTime[10] = "";                           // Actual time, given by RTC
 char timeLeft[6] = "31:26";                         // Time for the leds to be on
-char configuringTime[10] = "00:00:00" ;             // Time to configure RTC
+char configuringTime[10] = "";                      // Time to configure RTC
 char configuringRange[14] = "00:00 - 00:00";        // Time range for the leds to be on
 char enviromentChoice = 0;                          // Determines if leds go on if low enviroment light
 char lightValue = 100;
@@ -102,11 +115,14 @@ void Delay_Seconds(unsigned char z)
     }
 }
 
+//**Function to print in LCD (states machine)**//
 void LCD_Main()
 {    
+    // Clear the screen if the option is different
     if (lastOM != operationMode || lastOS != optionSelect)
         DisplayClr();
     
+    // Depending on the mode, it shows it
     switch (operationMode)
     {
         case 0:     // Steady state and selection menu
@@ -114,6 +130,23 @@ void LCD_Main()
             switch (optionSelect)
             {
                 case 0:     // Shows the actual time and time left for the leds to be on, if configured
+                    
+                    sprintf(actualTime, "");
+                    
+                    // Print current hour
+                    if (currentHour < 10)
+                        sprintf(actualTime, "0");
+                    sprintf(actualTime, "%s%d:", actualTime, currentHour);
+                    
+                    // Print current minute
+                    if (currentMinute < 10)
+                        sprintf(actualTime, "%s0", actualTime);
+                    sprintf(actualTime, "%s%d:", actualTime, currentMinute);
+                    
+                    // Print current second
+                    if (currentSecond < 10)
+                        sprintf(actualTime, "%s0", actualTime);
+                    sprintf(actualTime, "%s%d", actualTime, currentSecond);                    
                     
                     LCDGoto(0, 0);
                     LCDPutStr(actualTime);
@@ -149,26 +182,29 @@ void LCD_Main()
             LCDGoto(1, 0);
             LCDPutStr("CONFIGURE TIME");
             
+            sprintf(configuringTime, "");
+            // Print hour
+            if (aux1 < 10)
+                sprintf(configuringTime, "0");            
+            sprintf(configuringTime, "%s%d:", configuringTime, aux1);
+            
+            // Print minute
+            if (aux2 < 10)
+                sprintf(configuringTime, "%s0", configuringTime);            
+            sprintf(configuringTime, "%s%d:", configuringTime, aux2);
+            
+            // Print second
+            if (aux3 < 10)
+                sprintf(configuringTime, "%s0", configuringTime);            
+            sprintf(configuringTime, "%s%d", configuringTime, aux3);
+            
             switch (optionSelect)
             {
-                case 0:     // Select hour             
+                default:     // Select hour             
                     
                     LCDGoto(4, 1);
                     LCDPutStr(configuringTime);
-                    break;
-                
-                case 1:     // Select minute
-                    
-                    LCDGoto(4, 1);
-                    LCDPutStr(configuringTime);
-                    break;
-                
-                case 2:     // Select second            
-                    
-                    LCDGoto(4, 1);
-                    LCDPutStr(configuringTime);
-                    break;
-                
+                    break;                
             }
             break;
             
@@ -223,11 +259,174 @@ void LCD_Main()
     }
 }
 
+void readButtons()
+{
+    // Get the buttons value
+    select = SELECT_GetValue();
+    accept = ACCEPT_GetValue();
+    cancel = CANCEL_GetValue();
+    
+    // If cancel button is pressed (trailing edge))
+    if (cancel != lastCancel)
+    {
+        if (!cancel)
+        {
+            
+            operationMode = 0;
+            optionSelect = 0;
+            
+            return;
+        }
+    }
+    
+    // If select button is pressed (trailing edge)
+    if (select != lastSelect)
+    {
+        if (!select)
+        {
+            
+            switch (operationMode)
+            {
+                case 0:             // Steady state and selection menu
+
+                    switch (optionSelect)
+                    {
+                        case 0:     // Change menu option
+                            
+                            optionSelect++;
+                            break;
+                         
+                        case 1:     // Change menu option
+
+                            optionSelect++;
+                            break;
+                        
+                        case 2:     // Change menu option
+                            
+                            optionSelect++;
+                            break;
+                        
+                        case 3:     // Change menu option
+                            
+                            optionSelect = 0;
+                            break;
+
+                    }
+                    break;
+                    
+                case 1:             // Configure time option
+
+                    switch (optionSelect)
+                    {
+                        case 0:     // Change to minutes
+                            
+                            optionSelect++;
+                            break;
+                         
+                        case 1:     // Change to seconds
+
+                            optionSelect++;
+                            break;
+                        
+                        case 2:     // Back to main screen
+                            
+                            operationMode = 0;
+                            optionSelect = 0;
+                            currentHour = aux1;
+                            currentMinute = aux2;
+                            currentSecond = aux3;
+                            break;
+
+                    }
+                    break;
+
+
+            }
+            
+            return;
+        }
+    }
+    
+    // If accept button is pressed (trailing edge)
+    if (accept != lastAccept)
+    {
+        if (!accept)
+        {
+            
+            switch (operationMode)
+            {
+                case 0:             // Steady state, to adjust the time the leds are going to be on
+
+                    switch (optionSelect)
+                    {
+                        case 0:
+                            
+                            
+                            break;
+                         
+                        case 1:
+
+                            operationMode = 1;      // Selects the configure time option
+                            optionSelect = 0;
+                            aux1 = 0;
+                            aux2 = 0;
+                            aux3 = 0;
+                            break;
+                        
+                        case 2:
+                            
+                            
+                            break;
+                        
+                        case 3:
+                            
+                            
+                            break;
+
+                    }
+                    break;
+                
+                case 1:
+                    
+                    switch (optionSelect)
+                    {
+                        case 0:         // Add 1 to hours
+                            
+                            aux1++;
+                            if (aux1 > 23)
+                                aux1 = 0;
+                            break;
+                         
+                        case 1:         // Add 1 to minutes
+
+                            aux2++;
+                            if (aux2 > 59)
+                                aux2 = 0;
+                            break;
+                        
+                        case 2:         // Add 1 to seconds
+                            
+                            aux3++;
+                            if (aux3 > 59)
+                                aux3 = 0;
+                            break;
+                    }   
+                    break;
+            }
+        }
+    }
+    
+}
+
 
 void main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
+    
+    //SELECT_SetPullup();
+    //ACCEPT_SetPullup();
+    //CANCEL_SetPullup();
 
     // When using interrupts, you need to set the Global and Peripheral Interrupt Enable bits
     // Use the following macros to:
@@ -248,8 +447,9 @@ void main(void)
     
     //uint16_t convertedValue;
     
-    LCD_Initialize();       // initialize LCD module
- 
+    LCD_Initialize();       // initialize LCD module 
+    
+    CANCEL_SetDigitalInput();
     
     LCDPutStr("      HELA");
     LCDGoto(2, 1);           // go to column 4, row 1
@@ -272,29 +472,24 @@ void main(void)
         // Read ADC value from sensor
         //convertedValue = ADC_GetConversion(0x2);
         
-        if (second < 10)
-            sprintf(actualTime, "12:51:%d", 0);
-        
-        sprintf(actualTime, "%s%d", actualTime, second);
-        
+        readButtons();
+                
         LCD_Main();
         
         lastOM = operationMode;
         lastOS = optionSelect;
         
-        second++;
-        if (second > 59)
-            second = 0;
+//        second++;
+//        if (second > 59)
+//            second = 0;
+//        
+//        optionSelect++;
+//        if (optionSelect > 3)
+//            optionSelect = 0;
         
-        optionSelect++;
-        if (optionSelect > 3)
-            optionSelect = 0;
-        
-        Delay_Seconds(1);
-  
-        
-        
-        
+        lastSelect = select;
+        lastAccept = accept;
+        lastCancel = cancel;             
     }
 }
 /**
