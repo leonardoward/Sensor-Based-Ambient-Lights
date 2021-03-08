@@ -52,9 +52,17 @@ unsigned char operationMode = 0;        // Variable to select the operation mode
 unsigned char optionSelect = 0;         // Select an option inside an operation mode
 unsigned char lastOM = 0;               // Last operation mode selected
 unsigned char lastOS = 0;               // Last option selected
+
+unsigned char setOnLights = 0;          // Force lights to set on
+
 unsigned char currentHour = 0;          // Current time
 unsigned char currentMinute = 0;
 unsigned char currentSecond = 0;
+unsigned char minHourRange = 0;         // Hours range for the lights to be set on
+unsigned char minMinuteRange = 0;
+unsigned char maxHourRange = 0;
+unsigned char maxMinuteRange = 0;
+
 unsigned char aux1 = 0;                 // Aux variables
 unsigned char aux2 = 0;
 unsigned char aux3 = 0;
@@ -69,7 +77,7 @@ unsigned char lastCancel = 0;           // Last cancel button state
 
 char actualTime[10] = "";                           // Actual time, given by RTC
 char configuringTime[10] = "";                      // Time to configure RTC
-char configuringRange[14] = "00:00 - 00:00";        // Time range for the leds to be on
+char configuringRange[14] = "";                     // Time range for the leds to be on
 char enviromentChoice = 0;                          // Determines if leds go on if low enviroment light
 char lightValueText[5] = "";
 
@@ -156,6 +164,12 @@ void LCD_Main()
                     LCDGoto(0, 0);
                     LCDPutStr(actualTime);
                     
+                    LCDGoto(14, 1);
+                    if (setOnLights)
+                        LCDPutStr("ON");   
+                    else
+                        LCDPutStr("  ");
+                   
                     break;
                 
                 case 1:     // Configure the RTC time menu option
@@ -215,32 +229,34 @@ void LCD_Main()
             LCDGoto(2, 0);
             LCDPutStr("AUTO ON/OFF");
             
+            sprintf(configuringRange, "");
+            // Print min hour of range
+            if (aux1 < 10)
+                sprintf(configuringRange, "0");            
+            sprintf(configuringRange, "%s%d:", configuringRange, aux1);
+            
+            // Print min minute of range
+            if (aux2 < 10)
+                sprintf(configuringRange, "%s0", configuringRange);            
+            sprintf(configuringRange, "%s%d - ", configuringRange, aux2);
+            
+            // Print max hour of range
+            if (aux3 < 10)
+                sprintf(configuringRange, "%s0", configuringRange);            
+            sprintf(configuringRange, "%s%d:", configuringRange, aux3);
+            
+            // Print max minute of range
+            if (aux4 < 10)
+                sprintf(configuringRange, "%s0", configuringRange);            
+            sprintf(configuringRange, "%s%d", configuringRange, aux4);
+            
             switch (optionSelect)
             {
-                case 0:     // Select start hour             
+                default:     // Select start hour             
                     
                     LCDGoto(1, 1);
                     LCDPutStr(configuringRange);
-                    break;
-                
-                case 1:     // Select start minute
-                    
-                    LCDGoto(1, 1);
-                    LCDPutStr(configuringRange);
-                    break;
-                
-                case 2:     // Select end hour           
-                    
-                    LCDGoto(1, 1);
-                    LCDPutStr(configuringRange);
-                    break;
-                 
-                case 3:     // Select end minute        
-                    
-                    LCDGoto(1, 1);
-                    LCDPutStr(configuringRange);
-                    break;
-                
+                    break;                
             }
             break;
         
@@ -353,6 +369,37 @@ void readButtons()
 
                     }
                     break;
+                
+                case 2:                     // Auto on/off option
+                    
+                    switch (optionSelect)
+                    {
+                        case 0:             // Change to min minute of range
+                            
+                            optionSelect++;
+                            break;
+                        
+                        case 1:             // Change to max hour of range
+                            
+                            optionSelect++;
+                            break;
+                         
+                        case 2:             // Change to max minute of range
+                            
+                            optionSelect++;
+                            break;
+                        
+                        case 3:
+                            
+                            operationMode = 0;
+                            optionSelect = 0;
+                            minHourRange = aux1;
+                            minMinuteRange = aux2;
+                            maxHourRange = aux3;
+                            maxMinuteRange = aux4;
+                            break;
+                    }
+                    break;
                     
                 case 3:
                     
@@ -377,12 +424,15 @@ void readButtons()
             switch (operationMode)
             {
                 case 0:             // Steady state, to adjust the time the leds are going to be on
-
+                    
                     switch (optionSelect)
                     {
                         case 0:
                             
-                            
+                            if (setOnLights)
+                                setOnLights = 0;
+                            else
+                                setOnLights = 1;
                             break;
                          
                         case 1:
@@ -398,6 +448,10 @@ void readButtons()
                             
                             operationMode = 2;      // Selects the auto on/off option
                             optionSelect = 0;
+                            aux1 = 0;
+                            aux2 = 0;
+                            aux3 = 0;
+                            aux4 = 0;
                             break;
                         
                         case 3:
@@ -438,6 +492,40 @@ void readButtons()
                             break;
                     }   
                     break;
+                    
+                case 2:
+                    
+                    switch (optionSelect)
+                    {
+                        case 0:
+                            
+                            aux1++;
+                            if (aux1 > 23)
+                                aux1 = 0;
+                            break;
+                        
+                        case 1:
+                            
+                            aux2++;
+                            if (aux2 > 59)
+                                aux2 = 0;
+                            break;
+                        
+                        case 2:
+                            
+                            aux3++;
+                            if (aux3 > 23)
+                                aux3 = 0;
+                            break;
+                          
+                        case 3:
+                            
+                            aux4++;
+                            if (aux4 > 59)
+                                aux4 = 0;
+                            break;
+                    }
+                    break;
                 
                 case 3:
                     
@@ -458,11 +546,75 @@ void readButtons()
     
 }
 
-//*Function to determine if the lights are set on*//
-void setOnLights()
+/* Function used to compare the times of the RTC and verify if they belong to a given range*/
+//Returns 1 if the Current Hour and minutes belong in the rang [Hour1:Min1, Hour2:Min2], 
+//If the conditions are not met, it returns 0
+char timeInRange(unsigned char CurrentH, unsigned char CurrentM, unsigned char Range1H, unsigned char Range1M, unsigned char Range2H, unsigned char Range2M)
+{   
+    char result = 0;
+    char HighInterval_H;
+    char HighInterval_M;
+    char LowInterval_H;
+    char LowInterval_M;
+    
+    if (Range1H > Range2H)
+    {
+        HighInterval_H = Range1H;
+        HighInterval_M = Range1M;
+        LowInterval_H = Range2H;
+        LowInterval_M = Range2M;
+    } 
+    else 
+    {
+        if (Range1H < Range2H) 
+        {
+            HighInterval_H = Range2H;
+            HighInterval_M = Range2M;
+            LowInterval_H = Range1H;
+            LowInterval_M = Range1M; 
+        
+        } 
+        else 
+        {
+            if (Range1M >= Range2M) {
+                HighInterval_H = Range1H;
+                HighInterval_M = Range1M;
+                LowInterval_H = Range2H;
+                LowInterval_M = Range2M; 
+            } 
+            else
+            {
+                HighInterval_H = Range2H;
+                HighInterval_M = Range2M;
+                LowInterval_H = Range1H;
+                LowInterval_M = Range1M; 
+          
+            }
+        }
+    }
+    
+    bool comp1 = (CurrentH >= LowInterval_H) && (CurrentM >= LowInterval_M);
+    bool comp2 = (CurrentH <= HighInterval_H) && (CurrentM <= HighInterval_M);    
+    if (comp1 && comp2)
+        result = 1;
+    
+    return result;
+}
+
+//*Function to determine if the lights need to be set on*//
+void verifyLights()
 {
-    // Because of the enviroment light level
-    if(enviromentChoice && convertedValue <= threshold)
+    // Because are forced to
+    if (setOnLights)
+        RELAY_SetHigh();
+    
+    // Because current time is in the range configured as for the lights to set on
+    else if ((minHourRange || minMinuteRange || maxHourRange || maxMinuteRange)
+        && timeInRange(currentHour, currentMinute, minHourRange, minMinuteRange, maxHourRange, maxMinuteRange))
+        RELAY_SetHigh();
+    
+    // Because of the low enviroment light level
+    else if(enviromentChoice && convertedValue <= threshold)
         RELAY_SetHigh();
     
     else
@@ -528,7 +680,7 @@ void main(void)
         LCD_Main();
         
         // Verify if the lights need to be set on
-        setOnLights();
+        verifyLights();
         
         lastOM = operationMode;
         lastOS = optionSelect;
