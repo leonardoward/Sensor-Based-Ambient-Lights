@@ -29,13 +29,20 @@ Operation Modes
 
 # Getting Started
 
-**[Back to top](#table-of-contents)**
-
 ## Dependencies
+
+The project only requires the following development environments:
+
+* [MPLABX](https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-x-ide)
+* [Proteus](https://www.labcenter.com/simulation/)
+
+The Proteus project uses components the are contained in the environment by default, doesn't require additional component imports.
 
 **[Back to top](#table-of-contents)**
 
 ## Building
+
+The building process is performed in the MPLABX development environment.
 
 **[Back to top](#table-of-contents)**
 
@@ -55,13 +62,13 @@ git clone https://github.com/leonardoward/Sensor-Based-Ambient-Lights.git
 
 ## Running Tests
 
-Describe how to run unit tests for your project.
+The Proteus project contains a Serial Terminal that is used to display messages that can be used to debug errors.
 
 **[Back to top](#table-of-contents)**
 
 # Further Reading
 
-Provide links to other relevant documentation here
+The folder [Documents](https://github.com/leonardoward/Sensor-Based-Ambient-Lights/tree/main/Documents) contains a Report with the design process, and a document with the Bill od Materials.
 
 **[Back to top](#table-of-contents)**
 
