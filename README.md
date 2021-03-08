@@ -1,7 +1,11 @@
 # HELA MODULE
 PG-7232 Embedded Systems - Project Sprint 2
 
-The folder documents, contains a Report of the project and the complete Bill of Materials.
+This project contains the firmware and simulation of a prototype of ambient lights. It contains a PIC16F1768 to manage all the digital signals. This repository a [MPLABX](https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-x-ide) project, with the source code for the microcontroller (the folder Hela.X). It also contains a [Proteus](https://www.labcenter.com/simulation/) project  used to simulate and test the electronic design.
+
+The design is a modular system that allows the user to multiple usage modes for an [110V/220V LED Strip](https://es.aliexpress.com/item/1005001989354694.html?spm=a2g0o.productlist.0.0.15731814f4HM3v&algo_pvid=82597dfd-2696-4544-87ad-ca4784616c1c&algo_expid=82597dfd-2696-): they can be turn on/of manually or automatically depending on a the time of the day or the amount of light in the environment.
+
+For further information about the design requirements and the overall design visit the [Documents](https://github.com/leonardoward/Sensor-Based-Ambient-Lights/tree/main/Documents) folder for a more detailed report.
 
 ## Table of Contents
 
@@ -17,7 +21,7 @@ The folder documents, contains a Report of the project and the complete Bill of 
 
 # About the Project
 
-Modos de operacion propuestos
+Operation Modes
 
 # Project Status
 
