@@ -45,6 +45,9 @@
 #include <stdio.h>
 #include "LCD_Lib.h"          // include LCD driver source file
 
+#define max_adc_bit_value 421
+#define min_adc_bit_value 0
+
 unsigned char operationMode = 0;        // Variable to select the operation mode
 unsigned char optionSelect = 0;         // Select an option inside an operation mode
 unsigned char lastOM = 0;               // Last operation mode selected
@@ -65,12 +68,14 @@ unsigned char cancel = 0;               // Cancel button
 unsigned char lastCancel = 0;           // Last cancel button state
 
 char actualTime[10] = "";                           // Actual time, given by RTC
-char timeLeft[6] = "31:26";                         // Time for the leds to be on
 char configuringTime[10] = "";                      // Time to configure RTC
 char configuringRange[14] = "00:00 - 00:00";        // Time range for the leds to be on
 char enviromentChoice = 0;                          // Determines if leds go on if low enviroment light
-char lightValue = 100;
-char lightValueText[5] = " ";
+char lightValueText[5] = "";
+
+uint16_t convertedValue;                            // ADC current value
+uint8_t adc_percentage = 0;                         // ADC percentage value (0 to 100% of the sensor, not ADC)
+uint16_t threshold = 0;                             // Configured calibration threshold in ADC value (0 to 1024)
 
 //**Function to send one byte of date to UART**//
 void UART_send_char(char bt)  
@@ -150,9 +155,6 @@ void LCD_Main()
                     
                     LCDGoto(0, 0);
                     LCDPutStr(actualTime);
-            
-                    LCDGoto(11, 1);
-                    LCDPutStr(timeLeft);
                     
                     break;
                 
@@ -247,12 +249,24 @@ void LCD_Main()
             LCDGoto(0, 0);
             LCDPutStr("NIGHT LIGHT: ");
             
+            // Show selected option
             if (enviromentChoice)
                 LCDPutStr("YES");
             else
-                LCDPutStr("NO");
+                LCDPutStr("NO ");
             
-            sprintf(lightValueText, "%d%%", lightValue);
+            // Calculate the ADC percentage (sensor range)
+            adc_percentage = (convertedValue - min_adc_bit_value) * (100 - 0) / (max_adc_bit_value - min_adc_bit_value) + 0;
+            
+            // Adjust the text and print
+            if (adc_percentage < 10)
+                sprintf(lightValueText, "  ");
+            else if (adc_percentage < 100)
+                sprintf(lightValueText, " ");
+            else
+                sprintf(lightValueText, "");
+            
+            sprintf(lightValueText, "%s%d%%", lightValueText, adc_percentage);
             LCDGoto(6, 1);
             LCDPutStr(lightValueText);
             break;
@@ -339,6 +353,13 @@ void readButtons()
 
                     }
                     break;
+                    
+                case 3:
+                    
+                    operationMode = 0;
+                    optionSelect = 0;
+                    threshold = convertedValue;
+                    break;
 
 
             }
@@ -375,12 +396,17 @@ void readButtons()
                         
                         case 2:
                             
-                            
+                            operationMode = 2;      // Selects the auto on/off option
+                            optionSelect = 0;
                             break;
                         
                         case 3:
                             
-                            
+                            operationMode = 3;      // Selects the night light option
+                            optionSelect = 0;
+                            aux1 = 0;
+                            aux2 = 0;
+                            aux3 = 0;
                             break;
 
                     }
@@ -412,10 +438,35 @@ void readButtons()
                             break;
                     }   
                     break;
+                
+                case 3:
+                    
+                    switch (optionSelect)
+                    {
+                        case 0:
+                            
+                            if (enviromentChoice)
+                                enviromentChoice = 0;                            
+                            else
+                                enviromentChoice = 1;
+                            break;
+                    }
+                    break;
             }
         }
     }
     
+}
+
+//*Function to determine if the lights are set on*//
+void setOnLights()
+{
+    // Because of the enviroment light level
+    if(enviromentChoice && convertedValue <= threshold)
+        RELAY_SetHigh();
+    
+    else
+        RELAY_SetLow();
 }
 
 
@@ -423,10 +474,6 @@ void main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
-    
-    //SELECT_SetPullup();
-    //ACCEPT_SetPullup();
-    //CANCEL_SetPullup();
 
     // When using interrupts, you need to set the Global and Peripheral Interrupt Enable bits
     // Use the following macros to:
@@ -443,14 +490,16 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
     
-    //ADC_Initialize();
+    // Initialize the ADC
+    ADC_Initialize();
     
-    //uint16_t convertedValue;
+    // initialize LCD module
+    LCD_Initialize();        
     
-    LCD_Initialize();       // initialize LCD module 
-    
+    // Set RC6 (cancel button) as input
     CANCEL_SetDigitalInput();
     
+    // Initial screen
     LCDPutStr("      HELA");
     LCDGoto(2, 1);           // go to column 4, row 1
     LCDPutStr("INITIALIZING");
@@ -469,12 +518,17 @@ void main(void)
          *  2.06V -> 421 bits
          *  
         */
-        // Read ADC value from sensor
-        //convertedValue = ADC_GetConversion(0x2);
+        // Read ADC channel 2 value from sensor
+        convertedValue = ADC_GetConversion(0x2);
         
+        // Read all the buttons state
         readButtons();
-                
+        
+        // Show the correct screen
         LCD_Main();
+        
+        // Verify if the lights need to be set on
+        setOnLights();
         
         lastOM = operationMode;
         lastOS = optionSelect;

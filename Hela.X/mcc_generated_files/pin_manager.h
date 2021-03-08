@@ -280,6 +280,26 @@
 #define CANCEL_SetAnalogMode()      do { ANSELCbits.ANSC6 = 1; } while(0)
 #define CANCEL_SetDigitalMode()     do { ANSELCbits.ANSC6 = 0; } while(0)
 
+// get/set RELAY aliases
+#define RELAY_TRIS                 TRISCbits.TRISC7
+#define RELAY_LAT                  LATCbits.LATC7
+#define RELAY_PORT                 PORTCbits.RC7
+#define RELAY_WPU                  WPUCbits.WPUC7
+#define RELAY_OD                   ODCONCbits.ODC7
+#define RELAY_ANS                  ANSELCbits.ANSC7
+#define RELAY_SetHigh()            do { LATCbits.LATC7 = 1; } while(0)
+#define RELAY_SetLow()             do { LATCbits.LATC7 = 0; } while(0)
+#define RELAY_Toggle()             do { LATCbits.LATC7 = ~LATCbits.LATC7; } while(0)
+#define RELAY_GetValue()           PORTCbits.RC7
+#define RELAY_SetDigitalInput()    do { TRISCbits.TRISC7 = 1; } while(0)
+#define RELAY_SetDigitalOutput()   do { TRISCbits.TRISC7 = 0; } while(0)
+#define RELAY_SetPullup()          do { WPUCbits.WPUC7 = 1; } while(0)
+#define RELAY_ResetPullup()        do { WPUCbits.WPUC7 = 0; } while(0)
+#define RELAY_SetPushPull()        do { ODCONCbits.ODC7 = 0; } while(0)
+#define RELAY_SetOpenDrain()       do { ODCONCbits.ODC7 = 1; } while(0)
+#define RELAY_SetAnalogMode()      do { ANSELCbits.ANSC7 = 1; } while(0)
+#define RELAY_SetDigitalMode()     do { ANSELCbits.ANSC7 = 0; } while(0)
+
 /**
    @Param
     none
