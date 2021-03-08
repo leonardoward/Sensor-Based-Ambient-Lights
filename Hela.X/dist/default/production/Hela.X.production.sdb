@@ -1,0 +1,902 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F1768 ]
+[d frameptr 6 ]
+"88 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/adc.c
+[e E8899 . `uc
+FOTORESISTENCIA 2
+channel_DAC4_Output 26
+channel_DAC3_Output 27
+channel_DAC2_Output 28
+channel_Temp 29
+channel_DAC1_Output 30
+channel_FVRBuffer1 31
+]
+"105 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\main.c
+[e E9227 . `uc
+I2C_NOERR 0
+I2C_BUSY 1
+I2C_FAIL 2
+]
+"109
+[e E9315 . `uc
+FOTORESISTENCIA 2
+channel_DAC4_Output 26
+channel_DAC3_Output 27
+channel_DAC2_Output 28
+channel_Temp 29
+channel_DAC1_Output 30
+channel_FVRBuffer1 31
+]
+"146 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[e E9284 . `uc
+I2C_IDLE 0
+I2C_SEND_ADR_READ 1
+I2C_SEND_ADR_WRITE 2
+I2C_TX 3
+I2C_RX 4
+I2C_RCEN 5
+I2C_TX_EMPTY 6
+I2C_SEND_RESTART_READ 7
+I2C_SEND_RESTART_WRITE 8
+I2C_SEND_RESTART 9
+I2C_SEND_STOP 10
+I2C_RX_ACK 11
+I2C_RX_NACK_STOP 12
+I2C_RX_NACK_RESTART 13
+I2C_RESET 14
+I2C_ADDRESS_NACK 15
+]
+"165
+[e E360 . `uc
+I2C_STOP 1
+I2C_RESTART_READ 2
+I2C_RESTART_WRITE 3
+I2C_CONTINUE 4
+I2C_RESET_LINK 5
+]
+[e E355 . `uc
+I2C_NOERR 0
+I2C_BUSY 1
+I2C_FAIL 2
+]
+"191
+[e E9302 . `uc
+I2C_DATA_COMPLETE 0
+I2C_WRITE_COLLISION 1
+I2C_ADDR_NACK 2
+I2C_DATA_NACK 3
+I2C_TIMEOUT 4
+I2C_NULL 5
+]
+"67 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/examples/i2c_master_example.c
+[e E355 . `uc
+I2C_NOERR 0
+I2C_BUSY 1
+I2C_FAIL 2
+]
+"68
+[e E360 . `uc
+I2C_STOP 1
+I2C_RESTART_READ 2
+I2C_RESTART_WRITE 3
+I2C_CONTINUE 4
+I2C_RESET_LINK 5
+]
+"10 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c99\common\Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"59 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\main.c
+[v _UART_send_char UART_send_char `(v  1 e 1 0 ]
+"67
+[v _UART_send_string UART_send_string `(v  1 e 1 0 ]
+"76
+[v _main main `(v  1 e 1 0 ]
+"67 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/adc.c
+[v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
+"96
+[v _ADC_StartConversion ADC_StartConversion `(v  1 e 1 0 ]
+"103
+[v _ADC_IsConversionDone ADC_IsConversionDone `(a  1 e 1 0 ]
+"109
+[v _ADC_GetConversionResult ADC_GetConversionResult `(us  1 e 2 0 ]
+"115
+[v _ADC_GetConversion ADC_GetConversion `(us  1 e 2 0 ]
+"66 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/eusart.c
+[v _EUSART_Initialize EUSART_Initialize `(v  1 e 1 0 ]
+"144
+[v _EUSART_DefaultFramingErrorHandler EUSART_DefaultFramingErrorHandler `(v  1 e 1 0 ]
+"146
+[v _EUSART_DefaultOverrunErrorHandler EUSART_DefaultOverrunErrorHandler `(v  1 e 1 0 ]
+"154
+[v _EUSART_DefaultErrorHandler EUSART_DefaultErrorHandler `(v  1 e 1 0 ]
+"157
+[v _EUSART_SetFramingErrorHandler EUSART_SetFramingErrorHandler `(v  1 e 1 0 ]
+"161
+[v _EUSART_SetOverrunErrorHandler EUSART_SetOverrunErrorHandler `(v  1 e 1 0 ]
+"165
+[v _EUSART_SetErrorHandler EUSART_SetErrorHandler `(v  1 e 1 0 ]
+"142 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/examples/i2c_master_example.c
+[v _rd1RegCompleteHandler rd1RegCompleteHandler `(E360  1 s 1 rd1RegCompleteHandler ]
+"149
+[v _rd2RegCompleteHandler rd2RegCompleteHandler `(E360  1 s 1 rd2RegCompleteHandler ]
+"156
+[v _wr1RegCompleteHandler wr1RegCompleteHandler `(E360  1 s 1 wr1RegCompleteHandler ]
+"163
+[v _wr2RegCompleteHandler wr2RegCompleteHandler `(E360  1 s 1 wr2RegCompleteHandler ]
+"170
+[v _rdBlkRegCompleteHandler rdBlkRegCompleteHandler `(E360  1 s 1 rdBlkRegCompleteHandler ]
+"167 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[v _I2C_Initialize I2C_Initialize `(v  1 e 1 0 ]
+"176
+[v _I2C_Open I2C_Open `(E9227  1 e 1 0 ]
+"209
+[v _I2C_Close I2C_Close `(E9227  1 e 1 0 ]
+"224
+[v _I2C_MasterOperation I2C_MasterOperation `(E355  1 e 1 0 ]
+"246
+[v _I2C_MasterRead I2C_MasterRead `(E9227  1 e 1 0 ]
+"251
+[v _I2C_MasterWrite I2C_MasterWrite `(E355  1 e 1 0 ]
+"263
+[v _I2C_SetBuffer I2C_SetBuffer `(v  1 e 1 0 ]
+"273
+[v _I2C_SetDataCompleteCallback I2C_SetDataCompleteCallback `(v  1 e 1 0 ]
+"283
+[v _I2C_SetAddressNackCallback I2C_SetAddressNackCallback `(v  1 e 1 0 ]
+"298
+[v _I2C_SetCallback I2C_SetCallback `(v  1 s 1 I2C_SetCallback ]
+"312
+[v _I2C_Poller I2C_Poller `(v  1 s 1 I2C_Poller ]
+"321
+[v _I2C_MasterFsm I2C_MasterFsm `T(v  1 s 1 I2C_MasterFsm ]
+"333
+[v _I2C_DO_IDLE I2C_DO_IDLE `(E9284  1 s 1 I2C_DO_IDLE ]
+"340
+[v _I2C_DO_SEND_ADR_READ I2C_DO_SEND_ADR_READ `(E9284  1 s 1 I2C_DO_SEND_ADR_READ ]
+"347
+[v _I2C_DO_SEND_ADR_WRITE I2C_DO_SEND_ADR_WRITE `(E9284  1 s 1 I2C_DO_SEND_ADR_WRITE ]
+"354
+[v _I2C_DO_TX I2C_DO_TX `(E9284  1 s 1 I2C_DO_TX ]
+"378
+[v _I2C_DO_RX I2C_DO_RX `(E9284  1 s 1 I2C_DO_RX ]
+"402
+[v _I2C_DO_RCEN I2C_DO_RCEN `(E9284  1 s 1 I2C_DO_RCEN ]
+"409
+[v _I2C_DO_TX_EMPTY I2C_DO_TX_EMPTY `(E9284  1 s 1 I2C_DO_TX_EMPTY ]
+"450
+[v _I2C_DO_SEND_RESTART_READ I2C_DO_SEND_RESTART_READ `(E9284  1 s 1 I2C_DO_SEND_RESTART_READ ]
+"456
+[v _I2C_DO_SEND_RESTART_WRITE I2C_DO_SEND_RESTART_WRITE `(E9284  1 s 1 I2C_DO_SEND_RESTART_WRITE ]
+"463
+[v _I2C_DO_SEND_RESTART I2C_DO_SEND_RESTART `(E9284  1 s 1 I2C_DO_SEND_RESTART ]
+"469
+[v _I2C_DO_SEND_STOP I2C_DO_SEND_STOP `(E9284  1 s 1 I2C_DO_SEND_STOP ]
+"475
+[v _I2C_DO_RX_ACK I2C_DO_RX_ACK `(E9284  1 s 1 I2C_DO_RX_ACK ]
+"482
+[v _I2C_DO_RX_NACK_STOP I2C_DO_RX_NACK_STOP `(E9284  1 s 1 I2C_DO_RX_NACK_STOP ]
+"488
+[v _I2C_DO_RX_NACK_RESTART I2C_DO_RX_NACK_RESTART `(E9284  1 s 1 I2C_DO_RX_NACK_RESTART ]
+"494
+[v _I2C_DO_RESET I2C_DO_RESET `(E9284  1 s 1 I2C_DO_RESET ]
+"500
+[v _I2C_DO_ADDRESS_NACK I2C_DO_ADDRESS_NACK `(E9284  1 s 1 I2C_DO_ADDRESS_NACK ]
+"520
+[v _I2C_CallbackReturnStop I2C_CallbackReturnStop `(E360  1 e 1 0 ]
+"525
+[v _I2C_CallbackReturnReset I2C_CallbackReturnReset `(E360  1 e 1 0 ]
+"543
+[v _I2C_MasterOpen I2C_MasterOpen `T(a  1 s 1 I2C_MasterOpen ]
+"557
+[v _I2C_MasterClose I2C_MasterClose `T(v  1 s 1 I2C_MasterClose ]
+"563
+[v _I2C_MasterGetRxData I2C_MasterGetRxData `T(uc  1 s 1 I2C_MasterGetRxData ]
+"568
+[v _I2C_MasterSendTxData I2C_MasterSendTxData `T(v  1 s 1 I2C_MasterSendTxData ]
+"573
+[v _I2C_MasterEnableRestart I2C_MasterEnableRestart `T(v  1 s 1 I2C_MasterEnableRestart ]
+"578
+[v _I2C_MasterDisableRestart I2C_MasterDisableRestart `T(v  1 s 1 I2C_MasterDisableRestart ]
+"583
+[v _I2C_MasterStartRx I2C_MasterStartRx `T(v  1 s 1 I2C_MasterStartRx ]
+"588
+[v _I2C_MasterStart I2C_MasterStart `T(v  1 s 1 I2C_MasterStart ]
+"593
+[v _I2C_MasterStop I2C_MasterStop `T(v  1 s 1 I2C_MasterStop ]
+"598
+[v _I2C_MasterIsNack I2C_MasterIsNack `T(a  1 s 1 I2C_MasterIsNack ]
+"603
+[v _I2C_MasterSendAck I2C_MasterSendAck `T(v  1 s 1 I2C_MasterSendAck ]
+"609
+[v _I2C_MasterSendNack I2C_MasterSendNack `T(v  1 s 1 I2C_MasterSendNack ]
+"615
+[v _I2C_MasterClearBusCollision I2C_MasterClearBusCollision `T(v  1 s 1 I2C_MasterClearBusCollision ]
+"625
+[v _I2C_MasterEnableIrq I2C_MasterEnableIrq `T(v  1 s 1 I2C_MasterEnableIrq ]
+"635
+[v _I2C_MasterDisableIrq I2C_MasterDisableIrq `T(v  1 s 1 I2C_MasterDisableIrq ]
+"640
+[v _I2C_MasterClearIrq I2C_MasterClearIrq `T(v  1 s 1 I2C_MasterClearIrq ]
+"645
+[v _I2C_MasterSetIrq I2C_MasterSetIrq `T(v  1 s 1 I2C_MasterSetIrq ]
+"650
+[v _I2C_MasterWaitForEvent I2C_MasterWaitForEvent `T(v  1 s 1 I2C_MasterWaitForEvent ]
+"50 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/mcc.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+"61
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+"73
+[v _WDT_Initialize WDT_Initialize `(v  1 e 1 0 ]
+"58 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/memory.c
+[v _FLASH_ReadWord FLASH_ReadWord `(us  1 e 2 0 ]
+"94
+[v _FLASH_WriteBlock FLASH_WriteBlock `(c  1 e 1 0 ]
+"148
+[v _FLASH_EraseBlock FLASH_EraseBlock `(v  1 e 1 0 ]
+"55 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+[s S196 . 1 `uc 1 IOCIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 IOCIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"374 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\proc\pic16f1768.h
+[s S205 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 T0IE 1 0 :1:5 
+]
+[u S210 . 1 `S196 1 . 1 0 `S205 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES210  1 e 1 @11 ]
+[s S348 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSP1IF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 TMR1GIF 1 0 :1:7 
+]
+"601
+[s S357 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 CCPIF 1 0 :1:2 
+]
+[u S360 . 1 `S348 1 . 1 0 `S357 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES360  1 e 1 @17 ]
+[s S842 . 1 `uc 1 CCP2IF 1 0 :1:0 
+`uc 1 C3IF 1 0 :1:1 
+`uc 1 C4IF 1 0 :1:2 
+`uc 1 BCL1IF 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 C1IF 1 0 :1:5 
+`uc 1 C2IF 1 0 :1:6 
+`uc 1 OSFIF 1 0 :1:7 
+]
+"668
+[u S851 . 1 `S842 1 . 1 0 ]
+[v _PIR2bits PIR2bits `VES851  1 e 1 @18 ]
+"1716
+[v _TRISA TRISA `VEuc  1 e 1 @140 ]
+"1761
+[v _TRISB TRISB `VEuc  1 e 1 @141 ]
+"1800
+[v _TRISC TRISC `VEuc  1 e 1 @142 ]
+[s S884 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSP1IE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 TMR1GIE 1 0 :1:7 
+]
+"1883
+[s S893 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 CCPIE 1 0 :1:2 
+]
+[u S896 . 1 `S884 1 . 1 0 `S893 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES896  1 e 1 @145 ]
+[s S66 . 1 `uc 1 PS 1 0 :3:0 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 TMR0SE 1 0 :1:4 
+`uc 1 TMR0CS 1 0 :1:5 
+`uc 1 INTEDG 1 0 :1:6 
+`uc 1 nWPUEN 1 0 :1:7 
+]
+"2125
+[s S73 . 1 `uc 1 PS0 1 0 :1:0 
+`uc 1 PS1 1 0 :1:1 
+`uc 1 PS2 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+]
+[u S80 . 1 `S66 1 . 1 0 `S73 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES80  1 e 1 @149 ]
+"2242
+[v _WDTCON WDTCON `VEuc  1 e 1 @151 ]
+"2301
+[v _OSCTUNE OSCTUNE `VEuc  1 e 1 @152 ]
+"2359
+[v _OSCCON OSCCON `VEuc  1 e 1 @153 ]
+"2431
+[v _OSCSTAT OSCSTAT `VEuc  1 e 1 @154 ]
+"2500
+[v _ADRESL ADRESL `VEuc  1 e 1 @155 ]
+"2520
+[v _ADRESH ADRESH `VEuc  1 e 1 @156 ]
+"2540
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @157 ]
+[s S135 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 GO_nDONE 1 0 :1:1 
+`uc 1 CHS 1 0 :5:2 
+]
+"2565
+[s S139 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 ADGO 1 0 :1:1 
+`uc 1 CHS0 1 0 :1:2 
+`uc 1 CHS1 1 0 :1:3 
+`uc 1 CHS2 1 0 :1:4 
+`uc 1 CHS3 1 0 :1:5 
+`uc 1 CHS4 1 0 :1:6 
+]
+[s S147 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO 1 0 :1:1 
+]
+[u S150 . 1 `S135 1 . 1 0 `S139 1 . 1 0 `S147 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES150  1 e 1 @157 ]
+"2620
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @158 ]
+"2673
+[v _ADCON2 ADCON2 `VEuc  1 e 1 @159 ]
+"2727
+[v _LATA LATA `VEuc  1 e 1 @268 ]
+"2772
+[v _LATB LATB `VEuc  1 e 1 @269 ]
+"2811
+[v _LATC LATC `VEuc  1 e 1 @270 ]
+"4051
+[v _ANSELA ANSELA `VEuc  1 e 1 @396 ]
+"4090
+[v _ANSELB ANSELB `VEuc  1 e 1 @397 ]
+"4129
+[v _ANSELC ANSELC `VEuc  1 e 1 @398 ]
+"4187
+[v _PMADRL PMADRL `VEuc  1 e 1 @401 ]
+"4207
+[v _PMADRH PMADRH `VEuc  1 e 1 @402 ]
+"4234
+[v _PMDATL PMDATL `VEuc  1 e 1 @403 ]
+"4254
+[v _PMDATH PMDATH `VEuc  1 e 1 @404 ]
+[s S230 . 1 `uc 1 RD 1 0 :1:0 
+`uc 1 WR 1 0 :1:1 
+`uc 1 WREN 1 0 :1:2 
+`uc 1 WRERR 1 0 :1:3 
+`uc 1 FREE 1 0 :1:4 
+`uc 1 LWLO 1 0 :1:5 
+`uc 1 CFGS 1 0 :1:6 
+]
+"4290
+[u S238 . 1 `S230 1 . 1 0 ]
+[v _PMCON1bits PMCON1bits `VES238  1 e 1 @405 ]
+"4330
+[v _PMCON2 PMCON2 `VEuc  1 e 1 @406 ]
+"4371
+[v _RC1REG RC1REG `VEuc  1 e 1 @409 ]
+"4425
+[v _TX1REG TX1REG `VEuc  1 e 1 @410 ]
+"4434
+[v _TXREG TXREG `VEuc  1 e 1 @410 ]
+"4499
+[v _SPBRGL SPBRGL `VEuc  1 e 1 @411 ]
+"4561
+[v _SPBRGH SPBRGH `VEuc  1 e 1 @412 ]
+"4610
+[v _RC1STA RC1STA `VEuc  1 e 1 @413 ]
+[s S397 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"4636
+[u S406 . 1 `S397 1 . 1 0 ]
+[v _RC1STAbits RC1STAbits `VES406  1 e 1 @413 ]
+"4790
+[v _TX1STA TX1STA `VEuc  1 e 1 @414 ]
+[s S376 . 1 `uc 1 TX9D 1 0 :1:0 
+`uc 1 TRMT 1 0 :1:1 
+`uc 1 BRGH 1 0 :1:2 
+`uc 1 SENDB 1 0 :1:3 
+`uc 1 SYNC 1 0 :1:4 
+`uc 1 TXEN 1 0 :1:5 
+`uc 1 TX9 1 0 :1:6 
+`uc 1 CSRC 1 0 :1:7 
+]
+"4816
+[u S385 . 1 `S376 1 . 1 0 ]
+[v _TX1STAbits TX1STAbits `VES385  1 e 1 @414 ]
+"4970
+[v _BAUD1CON BAUD1CON `VEuc  1 e 1 @415 ]
+"5216
+[v _WPUA WPUA `VEuc  1 e 1 @524 ]
+"5266
+[v _WPUB WPUB `VEuc  1 e 1 @525 ]
+"5305
+[v _WPUC WPUC `VEuc  1 e 1 @526 ]
+"5367
+[v _SSP1BUF SSP1BUF `VEuc  1 e 1 @529 ]
+"5621
+[v _SSP1ADD SSP1ADD `VEuc  1 e 1 @530 ]
+"6129
+[v _SSP1STAT SSP1STAT `VEuc  1 e 1 @532 ]
+[s S863 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+"6151
+[u S872 . 1 `S863 1 . 1 0 ]
+[v _SSP1STATbits SSP1STATbits `VES872  1 e 1 @532 ]
+"6251
+[v _SSP1CON1 SSP1CON1 `VEuc  1 e 1 @533 ]
+[s S656 . 1 `uc 1 SSPM 1 0 :4:0 
+`uc 1 CKP 1 0 :1:4 
+`uc 1 SSPEN 1 0 :1:5 
+`uc 1 SSPOV 1 0 :1:6 
+`uc 1 WCOL 1 0 :1:7 
+]
+"6284
+[s S662 . 1 `uc 1 SSPM0 1 0 :1:0 
+`uc 1 SSPM1 1 0 :1:1 
+`uc 1 SSPM2 1 0 :1:2 
+`uc 1 SSPM3 1 0 :1:3 
+]
+[u S667 . 1 `S656 1 . 1 0 `S662 1 . 1 0 ]
+[v _SSP1CON1bits SSP1CON1bits `VES667  1 e 1 @533 ]
+"6521
+[v _SSP1CON2 SSP1CON2 `VEuc  1 e 1 @534 ]
+[s S821 . 1 `uc 1 SEN 1 0 :1:0 
+`uc 1 RSEN 1 0 :1:1 
+`uc 1 PEN 1 0 :1:2 
+`uc 1 RCEN 1 0 :1:3 
+`uc 1 ACKEN 1 0 :1:4 
+`uc 1 ACKDT 1 0 :1:5 
+`uc 1 ACKSTAT 1 0 :1:6 
+`uc 1 GCEN 1 0 :1:7 
+]
+"6543
+[u S830 . 1 `S821 1 . 1 0 ]
+[v _SSP1CON2bits SSP1CON2bits `VES830  1 e 1 @534 ]
+"6765
+[v _BORCON BORCON `VEuc  1 e 1 @541 ]
+"6894
+[v _ODCONA ODCONA `VEuc  1 e 1 @652 ]
+"6939
+[v _ODCONB ODCONB `VEuc  1 e 1 @653 ]
+"6978
+[v _ODCONC ODCONC `VEuc  1 e 1 @654 ]
+"7612
+[v _SLRCONA SLRCONA `VEuc  1 e 1 @780 ]
+"7657
+[v _SLRCONB SLRCONB `VEuc  1 e 1 @781 ]
+"7696
+[v _SLRCONC SLRCONC `VEuc  1 e 1 @782 ]
+"8144
+[v _INLVLA INLVLA `VEuc  1 e 1 @908 ]
+"8194
+[v _INLVLB INLVLB `VEuc  1 e 1 @909 ]
+"8233
+[v _INLVLC INLVLC `VEuc  1 e 1 @910 ]
+"23472
+[v _SSPCLKPPS SSPCLKPPS `VEuc  1 e 1 @3616 ]
+"23492
+[v _SSPDATPPS SSPDATPPS `VEuc  1 e 1 @3617 ]
+"23532
+[v _RXPPS RXPPS `VEuc  1 e 1 @3620 ]
+"23952
+[v _RB4PPS RB4PPS `VEuc  1 e 1 @3740 ]
+"23992
+[v _RB6PPS RB6PPS `VEuc  1 e 1 @3742 ]
+"24012
+[v _RB7PPS RB7PPS `VEuc  1 e 1 @3743 ]
+"32175
+[v _TXIF TXIF `VEb  1 e 0 @140 ]
+[s S302 . 1 `uc 1 perr 1 0 :1:0 
+`uc 1 ferr 1 0 :1:1 
+`uc 1 oerr 1 0 :1:2 
+`uc 1 reserved 1 0 :5:3 
+]
+"52 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/eusart.c
+[u S307 . 1 `S302 1 . 1 0 `uc 1 status 1 0 ]
+[v _eusartRxLastError eusartRxLastError `VES307  1 e 1 0 ]
+"58
+[v _EUSART_FramingErrorHandler EUSART_FramingErrorHandler `*.37(v  1 e 2 0 ]
+"59
+[v _EUSART_OverrunErrorHandler EUSART_OverrunErrorHandler `*.37(v  1 e 2 0 ]
+"60
+[v _EUSART_ErrorHandler EUSART_ErrorHandler `*.37(v  1 e 2 0 ]
+"146 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[v _i2c_fsmStateTable i2c_fsmStateTable `DC[16]*.37(E9284  1 e 32 0 ]
+[s S630 . 29 `[6]*.37(E360 1 callbackTable 12 0 `[6]*.1v 1 callbackPayload 6 12 `us 1 time_out 2 18 `us 1 time_out_value 2 20 `uc 1 address 1 22 `*.1uc 1 data_ptr 1 23 `ui 1 data_length 2 24 `E9284 1 state 1 26 `E355 1 error 1 27 `uc 1 addressNackCheck 1 28 :1:0 
+`uc 1 busy 1 28 :1:1 
+`uc 1 inUse 1 28 :1:2 
+`uc 1 bufferFree 1 28 :1:3 
+]
+"165
+[v _I2C_Status I2C_Status `S630  1 e 29 0 ]
+"76 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"118
+[v main@str_535 str `*.25uc  1 a 2 2 ]
+"112
+[v main@str str `*.25uc  1 a 2 0 ]
+"99
+[v main@convertedValue convertedValue `us  1 a 2 4 ]
+"130
+} 0
+"67
+[v _UART_send_string UART_send_string `(v  1 e 1 0 ]
+{
+[v UART_send_string@st_pt st_pt `*.25uc  1 p 2 1 ]
+"71
+} 0
+"59
+[v _UART_send_char UART_send_char `(v  1 e 1 0 ]
+{
+[v UART_send_char@bt bt `uc  1 a 1 wreg ]
+[v UART_send_char@bt bt `uc  1 a 1 wreg ]
+[v UART_send_char@bt bt `uc  1 a 1 0 ]
+"63
+} 0
+"50 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/mcc.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+{
+"59
+} 0
+"73
+[v _WDT_Initialize WDT_Initialize `(v  1 e 1 0 ]
+{
+"77
+} 0
+"55 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+{
+"126
+} 0
+"61 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/mcc.c
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+{
+"71
+} 0
+"167 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[v _I2C_Initialize I2C_Initialize `(v  1 e 1 0 ]
+{
+"174
+} 0
+"66 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/eusart.c
+[v _EUSART_Initialize EUSART_Initialize `(v  1 e 1 0 ]
+{
+"92
+} 0
+"161
+[v _EUSART_SetOverrunErrorHandler EUSART_SetOverrunErrorHandler `(v  1 e 1 0 ]
+{
+[v EUSART_SetOverrunErrorHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
+"163
+} 0
+"157
+[v _EUSART_SetFramingErrorHandler EUSART_SetFramingErrorHandler `(v  1 e 1 0 ]
+{
+[v EUSART_SetFramingErrorHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
+"159
+} 0
+"165
+[v _EUSART_SetErrorHandler EUSART_SetErrorHandler `(v  1 e 1 0 ]
+{
+[v EUSART_SetErrorHandler@interruptHandler interruptHandler `*.37(v  1 p 2 0 ]
+"167
+} 0
+"67 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/adc.c
+[v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
+{
+"86
+} 0
+"176 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[v _I2C_Open I2C_Open `(E9227  1 e 1 0 ]
+{
+[v I2C_Open@address address `uc  1 a 1 wreg ]
+"178
+[v I2C_Open@returnValue returnValue `E355  1 a 1 2 ]
+"176
+[v I2C_Open@address address `uc  1 a 1 wreg ]
+"178
+[v I2C_Open@address address `uc  1 a 1 1 ]
+"207
+} 0
+"543
+[v _I2C_MasterOpen I2C_MasterOpen `T(a  1 s 1 I2C_MasterOpen ]
+{
+"555
+} 0
+"246
+[v _I2C_MasterRead I2C_MasterRead `(E9227  1 e 1 0 ]
+{
+"249
+} 0
+"224
+[v _I2C_MasterOperation I2C_MasterOperation `(E355  1 e 1 0 ]
+{
+[v I2C_MasterOperation@read read `a  1 a 1 wreg ]
+"226
+[v I2C_MasterOperation@returnValue returnValue `E355  1 a 1 9 ]
+"224
+[v I2C_MasterOperation@read read `a  1 a 1 wreg ]
+"226
+[v I2C_MasterOperation@read read `a  1 a 1 8 ]
+"244
+} 0
+"312
+[v _I2C_Poller I2C_Poller `(v  1 s 1 I2C_Poller ]
+{
+"319
+} 0
+"650
+[v _I2C_MasterWaitForEvent I2C_MasterWaitForEvent `T(v  1 s 1 I2C_MasterWaitForEvent ]
+{
+"659
+} 0
+"321
+[v _I2C_MasterFsm I2C_MasterFsm `T(v  1 s 1 I2C_MasterFsm ]
+{
+"330
+} 0
+"500
+[v _I2C_DO_ADDRESS_NACK I2C_DO_ADDRESS_NACK `(E9284  1 s 1 I2C_DO_ADDRESS_NACK ]
+{
+"512
+} 0
+"494
+[v _I2C_DO_RESET I2C_DO_RESET `(E9284  1 s 1 I2C_DO_RESET ]
+{
+"499
+} 0
+"488
+[v _I2C_DO_RX_NACK_RESTART I2C_DO_RX_NACK_RESTART `(E9284  1 s 1 I2C_DO_RX_NACK_RESTART ]
+{
+"492
+} 0
+"482
+[v _I2C_DO_RX_NACK_STOP I2C_DO_RX_NACK_STOP `(E9284  1 s 1 I2C_DO_RX_NACK_STOP ]
+{
+"486
+} 0
+"475
+[v _I2C_DO_RX_ACK I2C_DO_RX_ACK `(E9284  1 s 1 I2C_DO_RX_ACK ]
+{
+"479
+} 0
+"469
+[v _I2C_DO_SEND_STOP I2C_DO_SEND_STOP `(E9284  1 s 1 I2C_DO_SEND_STOP ]
+{
+"473
+} 0
+"463
+[v _I2C_DO_SEND_RESTART I2C_DO_SEND_RESTART `(E9284  1 s 1 I2C_DO_SEND_RESTART ]
+{
+"467
+} 0
+"456
+[v _I2C_DO_SEND_RESTART_WRITE I2C_DO_SEND_RESTART_WRITE `(E9284  1 s 1 I2C_DO_SEND_RESTART_WRITE ]
+{
+"460
+} 0
+"450
+[v _I2C_DO_SEND_RESTART_READ I2C_DO_SEND_RESTART_READ `(E9284  1 s 1 I2C_DO_SEND_RESTART_READ ]
+{
+"454
+} 0
+"402
+[v _I2C_DO_RCEN I2C_DO_RCEN `(E9284  1 s 1 I2C_DO_RCEN ]
+{
+"407
+} 0
+"378
+[v _I2C_DO_RX I2C_DO_RX `(E9284  1 s 1 I2C_DO_RX ]
+{
+"400
+} 0
+"354
+[v _I2C_DO_TX I2C_DO_TX `(E9284  1 s 1 I2C_DO_TX ]
+{
+"376
+} 0
+"347
+[v _I2C_DO_SEND_ADR_WRITE I2C_DO_SEND_ADR_WRITE `(E9284  1 s 1 I2C_DO_SEND_ADR_WRITE ]
+{
+"352
+} 0
+"340
+[v _I2C_DO_SEND_ADR_READ I2C_DO_SEND_ADR_READ `(E9284  1 s 1 I2C_DO_SEND_ADR_READ ]
+{
+"345
+} 0
+"333
+[v _I2C_DO_IDLE I2C_DO_IDLE `(E9284  1 s 1 I2C_DO_IDLE ]
+{
+"338
+} 0
+"409
+[v _I2C_DO_TX_EMPTY I2C_DO_TX_EMPTY `(E9284  1 s 1 I2C_DO_TX_EMPTY ]
+{
+"424
+} 0
+"645
+[v _I2C_MasterSetIrq I2C_MasterSetIrq `T(v  1 s 1 I2C_MasterSetIrq ]
+{
+"648
+} 0
+"598
+[v _I2C_MasterIsNack I2C_MasterIsNack `T(a  1 s 1 I2C_MasterIsNack ]
+{
+"601
+} 0
+"568
+[v _I2C_MasterSendTxData I2C_MasterSendTxData `T(v  1 s 1 I2C_MasterSendTxData ]
+{
+[v I2C_MasterSendTxData@data data `uc  1 a 1 wreg ]
+[v I2C_MasterSendTxData@data data `uc  1 a 1 wreg ]
+"570
+[v I2C_MasterSendTxData@data data `uc  1 a 1 0 ]
+"571
+} 0
+"603
+[v _I2C_MasterSendAck I2C_MasterSendAck `T(v  1 s 1 I2C_MasterSendAck ]
+{
+"607
+} 0
+"563
+[v _I2C_MasterGetRxData I2C_MasterGetRxData `T(uc  1 s 1 I2C_MasterGetRxData ]
+{
+"566
+} 0
+"609
+[v _I2C_MasterSendNack I2C_MasterSendNack `T(v  1 s 1 I2C_MasterSendNack ]
+{
+"613
+} 0
+"583
+[v _I2C_MasterStartRx I2C_MasterStartRx `T(v  1 s 1 I2C_MasterStartRx ]
+{
+"586
+} 0
+"170 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/examples/i2c_master_example.c
+[v _rdBlkRegCompleteHandler rdBlkRegCompleteHandler `(E360  1 s 1 rdBlkRegCompleteHandler ]
+{
+[v rdBlkRegCompleteHandler@ptr ptr `*.1v  1 p 1 9 ]
+"175
+} 0
+"156
+[v _wr1RegCompleteHandler wr1RegCompleteHandler `(E360  1 s 1 wr1RegCompleteHandler ]
+{
+[v wr1RegCompleteHandler@ptr ptr `*.1v  1 p 1 9 ]
+"161
+} 0
+"149
+[v _rd2RegCompleteHandler rd2RegCompleteHandler `(E360  1 s 1 rd2RegCompleteHandler ]
+{
+[v rd2RegCompleteHandler@ptr ptr `*.1v  1 p 1 9 ]
+"154
+} 0
+"142
+[v _rd1RegCompleteHandler rd1RegCompleteHandler `(E360  1 s 1 rd1RegCompleteHandler ]
+{
+[v rd1RegCompleteHandler@ptr ptr `*.1v  1 p 1 9 ]
+"147
+} 0
+"525 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[v _I2C_CallbackReturnReset I2C_CallbackReturnReset `(E360  1 e 1 0 ]
+{
+"528
+} 0
+"520
+[v _I2C_CallbackReturnStop I2C_CallbackReturnStop `(E360  1 e 1 0 ]
+{
+"523
+} 0
+"163 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/examples/i2c_master_example.c
+[v _wr2RegCompleteHandler wr2RegCompleteHandler `(E360  1 s 1 wr2RegCompleteHandler ]
+{
+[v wr2RegCompleteHandler@ptr ptr `*.1v  1 p 1 9 ]
+"168
+} 0
+"273 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/i2c_master.c
+[v _I2C_SetDataCompleteCallback I2C_SetDataCompleteCallback `(v  1 e 1 0 ]
+{
+[v I2C_SetDataCompleteCallback@cb cb `*.37(E360  1 p 2 5 ]
+[v I2C_SetDataCompleteCallback@ptr ptr `*.1v  1 p 1 7 ]
+"276
+} 0
+"298
+[v _I2C_SetCallback I2C_SetCallback `(v  1 s 1 I2C_SetCallback ]
+{
+[v I2C_SetCallback@idx idx `E9302  1 a 1 wreg ]
+[v I2C_SetCallback@idx idx `E9302  1 a 1 wreg ]
+[v I2C_SetCallback@cb cb `*.37(E360  1 p 2 0 ]
+[v I2C_SetCallback@ptr ptr `*.1v  1 p 1 2 ]
+"300
+[v I2C_SetCallback@idx idx `E9302  1 a 1 4 ]
+"310
+} 0
+"263
+[v _I2C_SetBuffer I2C_SetBuffer `(v  1 e 1 0 ]
+{
+[v I2C_SetBuffer@buffer buffer `*.1v  1 a 1 wreg ]
+[v I2C_SetBuffer@buffer buffer `*.1v  1 a 1 wreg ]
+[v I2C_SetBuffer@bufferSize bufferSize `ui  1 p 2 0 ]
+"265
+[v I2C_SetBuffer@buffer buffer `*.1v  1 a 1 3 ]
+"271
+} 0
+"593
+[v _I2C_MasterStop I2C_MasterStop `T(v  1 s 1 I2C_MasterStop ]
+{
+"596
+} 0
+"573
+[v _I2C_MasterEnableRestart I2C_MasterEnableRestart `T(v  1 s 1 I2C_MasterEnableRestart ]
+{
+"576
+} 0
+"588
+[v _I2C_MasterStart I2C_MasterStart `T(v  1 s 1 I2C_MasterStart ]
+{
+"591
+} 0
+"209
+[v _I2C_Close I2C_Close `(E9227  1 e 1 0 ]
+{
+"211
+[v I2C_Close@returnValue returnValue `E355  1 a 1 1 ]
+"222
+} 0
+"635
+[v _I2C_MasterDisableIrq I2C_MasterDisableIrq `T(v  1 s 1 I2C_MasterDisableIrq ]
+{
+"638
+} 0
+"557
+[v _I2C_MasterClose I2C_MasterClose `T(v  1 s 1 I2C_MasterClose ]
+{
+"561
+} 0
+"640
+[v _I2C_MasterClearIrq I2C_MasterClearIrq `T(v  1 s 1 I2C_MasterClearIrq ]
+{
+"643
+} 0
+"115 C:\Users\Jesus Guillen\Documents\GitHub\Sensor-Based-Ambient-Lights\Hela.X\mcc_generated_files/adc.c
+[v _ADC_GetConversion ADC_GetConversion `(us  1 e 2 0 ]
+{
+[v ADC_GetConversion@channel channel `E8899  1 a 1 wreg ]
+[v ADC_GetConversion@channel channel `E8899  1 a 1 wreg ]
+"118
+[v ADC_GetConversion@channel channel `E8899  1 a 1 3 ]
+"136
+} 0
