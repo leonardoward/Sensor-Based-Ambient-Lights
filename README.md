@@ -16,7 +16,6 @@ For further information about the design requirements and the overall design vis
     3. [Usage](#usage)
 3. [Further Reading](#further-reading)
 4. [Authors](#authors)
-5. [Acknowledgements](#acknowledgements)
 
 # About the Project
 
@@ -79,5 +78,3 @@ The folder [Documents](https://github.com/leonardoward/Sensor-Based-Ambient-Ligh
 * **[Vincenzo D’Argento](https://github.com/vincdargento)**
 
 **[Back to top](#table-of-contents)**
-
-# Acknowledgments
