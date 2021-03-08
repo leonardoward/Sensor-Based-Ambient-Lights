@@ -21,7 +21,9 @@ For further information about the design requirements and the overall design vis
 
 # About the Project
 
-Operation Modes
+The following image presents the Proteus Project with the complete electronic design:
+
+![Proteus Project](./images/proteus_schematic.png)
 
 # Project Status
 
