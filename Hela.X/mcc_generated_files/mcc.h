@@ -52,7 +52,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <conio.h>
-#include "memory.h"
 #include "adc.h"
 #include "eusart.h"
 
