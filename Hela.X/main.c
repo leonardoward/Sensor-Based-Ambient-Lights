@@ -77,8 +77,8 @@ unsigned char lastCancel = 0;           // Last cancel button state
 
 char actualTime[10] = "";                           // Actual time, given by RTC
 char configuringTime[10] = "";                      // Time to configure RTC
-char configuringRange[14] = "";                     // Time range for the leds to be on
-char enviromentChoice = 0;                          // Determines if leds go on if low enviroment light
+char configuringRange[14] = "";                     // Time range for the leds to set on
+char enviromentChoice = 0;                          // Determines if leds set on if low enviroment light
 char lightValueText[5] = "";
 
 uint16_t convertedValue;                            // ADC current value
@@ -100,14 +100,12 @@ void UART_send_string(char* st_pt)
         UART_send_char(*st_pt++); //process it as a byte data
 }
 
-//**Function to print an integer number into serial monitor**//
-void printInt(int number, char * description)
-{
-    char str[10];
-    sprintf(str, "%d", number);
+//*Function to print string (UART)*//
+void printString(char* d, char* description)
+{    
     UART_send_string(description);
     UART_send_string(": ");
-    UART_send_string(str);
+    UART_send_string(d);
     UART_send_string("\r\n");
 }
 
@@ -117,16 +115,6 @@ void printInt(int number, char * description)
 /*
                          Main application
  */
-
-
-void Delay_Seconds(unsigned char z)
-{
-    unsigned char x,y;
-    for (y=0; y<z; y++)
-    {
-        for(x=0; x<100; x++)__delay_ms(10);
-    }
-}
 
 //**Function to print in LCD (states machine)**//
 void LCD_Main()
@@ -272,7 +260,7 @@ void LCD_Main()
                 LCDPutStr("NO ");
             
             // Calculate the ADC percentage (sensor range)
-            adc_percentage = (convertedValue - min_adc_bit_value) * (100 - 0) / (max_adc_bit_value - min_adc_bit_value) + 0;
+            adc_percentage = (convertedValue - min_adc_bit_value) * (100) / (max_adc_bit_value - min_adc_bit_value);
             
             // Adjust the text and print
             if (adc_percentage < 10)
@@ -321,26 +309,16 @@ void readButtons()
 
                     switch (optionSelect)
                     {
-                        case 0:     // Change menu option
-                            
-                            optionSelect++;
-                            break;
-                         
-                        case 1:     // Change menu option
-
-                            optionSelect++;
-                            break;
-                        
-                        case 2:     // Change menu option
-                            
-                            optionSelect++;
-                            break;
-                        
                         case 3:     // Change menu option
                             
                             optionSelect = 0;
                             break;
-
+                            
+                        default:     // Change menu option
+                            
+                            optionSelect++;
+                            break;                       
+                        
                     }
                     break;
                     
@@ -348,16 +326,6 @@ void readButtons()
 
                     switch (optionSelect)
                     {
-                        case 0:     // Change to minutes
-                            
-                            optionSelect++;
-                            break;
-                         
-                        case 1:     // Change to seconds
-
-                            optionSelect++;
-                            break;
-                        
                         case 2:     // Back to main screen
                             
                             operationMode = 0;
@@ -366,6 +334,11 @@ void readButtons()
                             currentMinute = aux2;
                             currentSecond = aux3;
                             break;
+                            
+                        default:     // Change to minute, second
+                            
+                            optionSelect++;
+                            break;  
 
                     }
                     break;
@@ -374,21 +347,6 @@ void readButtons()
                     
                     switch (optionSelect)
                     {
-                        case 0:             // Change to min minute of range
-                            
-                            optionSelect++;
-                            break;
-                        
-                        case 1:             // Change to max hour of range
-                            
-                            optionSelect++;
-                            break;
-                         
-                        case 2:             // Change to max minute of range
-                            
-                            optionSelect++;
-                            break;
-                        
                         case 3:
                             
                             operationMode = 0;
@@ -398,6 +356,12 @@ void readButtons()
                             maxHourRange = aux3;
                             maxMinuteRange = aux4;
                             break;
+                            
+                        default:             // Change to min minute of range
+                            
+                            optionSelect++;
+                            break;
+                        
                     }
                     break;
                     
@@ -425,6 +389,11 @@ void readButtons()
             {
                 case 0:             // Steady state, to adjust the time the leds are going to be on
                     
+                    aux1 = 0;
+                    aux2 = 0;
+                    aux3 = 0;
+                    aux4 = 0;
+                    
                     switch (optionSelect)
                     {
                         case 0:
@@ -439,28 +408,18 @@ void readButtons()
 
                             operationMode = 1;      // Selects the configure time option
                             optionSelect = 0;
-                            aux1 = 0;
-                            aux2 = 0;
-                            aux3 = 0;
                             break;
                         
                         case 2:
                             
                             operationMode = 2;      // Selects the auto on/off option
                             optionSelect = 0;
-                            aux1 = 0;
-                            aux2 = 0;
-                            aux3 = 0;
-                            aux4 = 0;
                             break;
                         
                         case 3:
                             
                             operationMode = 3;      // Selects the night light option
                             optionSelect = 0;
-                            aux1 = 0;
-                            aux2 = 0;
-                            aux3 = 0;
                             break;
 
                     }
@@ -621,26 +580,19 @@ void verifyLights()
         RELAY_SetLow();
 }
 
+void debbuging()
+{
+    printString(actualTime, "Current time is");
+    
+    sprintf(lightValueText, "%d", convertedValue);
+    printString(lightValueText, "Current sensor value is");
+}
+
 
 void main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
-
-    // When using interrupts, you need to set the Global and Peripheral Interrupt Enable bits
-    // Use the following macros to:
-
-    // Enable the Global Interrupts
-    //INTERRUPT_GlobalInterruptEnable();
-
-    // Enable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptEnable();
-
-    // Disable the Global Interrupts
-    //INTERRUPT_GlobalInterruptDisable();
-
-    // Disable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptDisable();
     
     // Initialize the ADC
     ADC_Initialize();
@@ -655,7 +607,7 @@ void main(void)
     LCDPutStr("      HELA");
     LCDGoto(2, 1);           // go to column 4, row 1
     LCDPutStr("INITIALIZING");
-    Delay_Seconds(3);
+    __delay_ms(3000);
     DisplayClr();
     
     while (1)
@@ -682,16 +634,12 @@ void main(void)
         // Verify if the lights need to be set on
         verifyLights();
         
+        // Print debug values (UART)
+        debbuging();
+        
+        // Update control variables
         lastOM = operationMode;
         lastOS = optionSelect;
-        
-//        second++;
-//        if (second > 59)
-//            second = 0;
-//        
-//        optionSelect++;
-//        if (optionSelect > 3)
-//            optionSelect = 0;
         
         lastSelect = select;
         lastAccept = accept;
